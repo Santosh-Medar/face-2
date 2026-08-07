@@ -1,0 +1,329 @@
+<!-- templates/admin/admin_user_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #eef1f5; padding: 20px; }
+        .navbar { background: linear-gradient(145deg, #0d1b4a, #1a2a6c); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .card { border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .card-header { background: linear-gradient(135deg, #1a2a6c, #2d3e8f); color: #fff; border-radius: 16px 16px 0 0 !important; padding: 14px 20px; }
+        .card-header h5 { margin: 0; font-weight: 600; }
+        .btn-3d { box-shadow: 0 4px 8px rgba(0,0,0,0.15); transition: all 0.15s ease; border: none; padding: 10px 24px; font-weight: 500; border-radius: 10px; }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,0.2); }
+        .btn-3d:active { transform: translateY(2px); box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .btn-primary { background: linear-gradient(145deg, #1a2a6c, #2d3e8f); color: #fff; }
+        .btn-primary:hover { background: linear-gradient(145deg, #22337a, #344a9e); color: #fff; }
+        .btn-secondary { background: #f8fafc; border: 1px solid #cbd5e1; color: #1a2a6c; }
+        .btn-secondary:hover { background: #fff; border-color: #1a2a6c; }
+        .btn-danger-3d { background: #dc3545; border: none; }
+        .btn-danger-3d:hover { background: #c82333; }
+        form input, form select, form textarea {
+            border-radius: 10px;
+            border: 1px solid #dce1e8;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            padding: 10px 14px;
+            background: #fafbfc;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        form input:focus, form select:focus, form textarea:focus {
+            border-color: #2d3e8f;
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+            background: #fff;
+        }
+        form label {
+            font-weight: 600;
+            color: #1a2a6c;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+            margin-bottom: 4px;
+            display: block;
+        }
+        .help-text { font-size: 0.8rem; color: #8892a8; margin-top: 4px; }
+        .info-row { display: flex; padding: 8px 0; border-bottom: 1px solid #f0f0f0; }
+        .info-label { font-weight: 600; width: 160px; color: #1a2a6c; }
+        .info-value { flex: 1; color: #333; }
+        .face-image { border-radius: 12px; border: 2px solid #e0e4ea; max-width: 150px; }
+        .current-face { margin: 10px 0; }
+        .face-upload { margin-top: 10px; }
+        .badge-subject { background: #e9ecef; color: #1a2a6c; font-weight: 500; padding: 2px 10px; border-radius: 20px; margin-right: 6px; }
+        .form-group { margin-bottom: 1.2rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'admin_dashboard' %}"><i class="fas fa-university"></i> Admin Panel</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4"><i class="fas fa-user-circle" style="color: #1a2a6c;"></i> User Detail</h2>
+
+        <!-- ======================== STUDENT INFO ======================== -->
+        {% if user_obj.user_type == 'student' and profile %}
+        <div class="card">
+            <div class="card-header"><h5><i class="fas fa-user-graduate me-2"></i> Student Profile</h5></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row"><span class="info-label">Student Name</span><span class="info-value">{{ user_obj.get_full_name }}</span></div>
+                        <div class="info-row"><span class="info-label">UUCMS ID</span><span class="info-value">{{ user_obj.username }}</span></div>
+                        <div class="info-row"><span class="info-label">Email</span><span class="info-value">{{ user_obj.email }}</span></div>
+                        <div class="info-row"><span class="info-label">Phone Number</span><span class="info-value">{{ user_obj.phone_number|default:"—" }}</span></div>
+                        <div class="info-row"><span class="info-label">Roll No</span><span class="info-value">{{ profile.roll_no }}</span></div>
+                        <div class="info-row"><span class="info-label">Department</span><span class="info-value">{{ profile.department }}</span></div>
+                        <div class="info-row"><span class="info-label">Registration Complete</span><span class="info-value">{% if profile.registration_complete %} <span class="badge bg-success">Yes</span> {% else %} <span class="badge bg-warning">Pending</span> {% endif %}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Face Image -->
+                        <div class="current-face">
+                            <label class="fw-bold">Current Face Image:</label><br>
+                            {% if profile.face_image %}
+                                <img src="{{ profile.face_image.url }}" class="face-image" alt="Student Face">
+                            {% else %}
+                                <span class="text-muted">No face image uploaded.</span>
+                            {% endif %}
+                        </div>
+                        <!-- Enrollment details -->
+                        {% with enrollment=profile.studentenrollment_set.first %}
+                        {% if enrollment %}
+                        <div class="info-row"><span class="info-label">Course</span><span class="info-value">{{ enrollment.course.code }} - {{ enrollment.course.name }}</span></div>
+                        <div class="info-row"><span class="info-label">Semester</span><span class="info-value">{{ enrollment.semester }}</span></div>
+                        <div class="info-row"><span class="info-label">Section</span><span class="info-value">{{ enrollment.section.name }}</span></div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+
+                <!-- Subjects Enrolled -->
+                {% with enrollment=profile.studentenrollment_set.first %}
+                {% if enrollment %}
+                <hr>
+                <h6 class="mt-3">Subjects Enrolled</h6>
+                <div class="subject-list">
+                    <ul>
+                        {% for sub in enrollment.subjects.all %}
+                        <li>
+                            <span class="badge-subject">{{ sub.code }}</span> {{ sub.name }}
+                            {% if sub.code|upper in 'KAN,GKA' or 'Kannada' in sub.name %}
+                                <span class="badge bg-info text-dark ms-2">Language 1</span>
+                            {% elif sub.code|upper in 'HIN,GHN' or 'Hindi' in sub.name %}
+                                <span class="badge bg-info text-dark ms-2">Language 1</span>
+                            {% elif sub.code|upper in 'GEN' or 'English' in sub.name %}
+                                <span class="badge bg-secondary text-white ms-2">Language 2 (Basic English)</span>
+                            {% else %}
+                                <span class="badge bg-light text-dark ms-2">Core</span>
+                            {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="help-text mt-2">Language 2 (Basic English) is automatically assigned.</div>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ======================== NON-STUDENT INFO ======================== -->
+        {% if user_obj.user_type != 'student' %}
+        <div class="card">
+            <div class="card-header"><h5><i class="fas fa-user-tie me-2"></i> {{ user_obj.get_user_type_display }} Profile</h5></div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-row"><span class="info-label">Name</span><span class="info-value">{{ user_obj.get_full_name|default:user_obj.username }}</span></div>
+                        <div class="info-row"><span class="info-label">Username</span><span class="info-value">{{ user_obj.username }}</span></div>
+                        <div class="info-row"><span class="info-label">Email</span><span class="info-value">{{ user_obj.email }}</span></div>
+                        <div class="info-row"><span class="info-label">Phone</span><span class="info-value">{{ user_obj.phone_number|default:"—" }}</span></div>
+                        <div class="info-row"><span class="info-label">Last Login</span><span class="info-value">{{ user_obj.last_login|default:"Never" }}</span></div>
+                    </div>
+                    <div class="col-md-6">
+                        <!-- Staff profile extra -->
+                        {% with staff_profile=user_obj.staff_profile %}
+                        {% if staff_profile %}
+                        <div class="info-row"><span class="info-label">Employee ID</span><span class="info-value">{{ staff_profile.employee_id|default:"—" }}</span></div>
+                        <div class="info-row"><span class="info-label">Department</span><span class="info-value">{{ staff_profile.department|default:"—" }}</span></div>
+                        <div class="info-row"><span class="info-label">Designation</span><span class="info-value">{{ staff_profile.designation|default:"—" }}</span></div>
+                        <div class="info-row"><span class="info-label">Registration Complete</span><span class="info-value">{% if staff_profile.registration_complete %} <span class="badge bg-success">Yes</span> {% else %} <span class="badge bg-warning">No</span> {% endif %}</span></div>
+                        <div class="current-face">
+                            <label class="fw-bold">Current Face Image:</label><br>
+                            {% if staff_profile.face_image %}
+                                <img src="{{ staff_profile.face_image.url }}" class="face-image" alt="Staff Face">
+                            {% else %}
+                                <span class="text-muted">No face image uploaded.</span>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ======================== EDIT FORM ======================== -->
+        <div class="card">
+            <div class="card-header"><h5><i class="fas fa-edit me-2"></i> Edit User</h5></div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Hidden fields: we skip user_type, assigned_course, is_active -->
+                    <!-- We'll render only the fields we want: username, first_name, last_name, email, phone_number -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_username">Username</label>
+                                <input type="text" name="username" value="{{ form.username.value|default:'' }}" class="form-control" id="id_username" required>
+                                {{ form.username.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_first_name">First Name</label>
+                                <input type="text" name="first_name" value="{{ form.first_name.value|default:'' }}" class="form-control" id="id_first_name">
+                            </div>
+                            <div class="form-group">
+                                <label for="id_last_name">Last Name</label>
+                                <input type="text" name="last_name" value="{{ form.last_name.value|default:'' }}" class="form-control" id="id_last_name">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="id_email">Email</label>
+                                <input type="email" name="email" value="{{ form.email.value|default:'' }}" class="form-control" id="id_email" required>
+                                {{ form.email.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label for="id_phone_number">Phone Number</label>
+                                <input type="text" name="phone_number" value="{{ form.phone_number.value|default:'' }}" class="form-control" id="id_phone_number">
+                            </div>
+                            <!-- Face image upload -->
+                            <div class="form-group">
+                                <label for="id_face_image">Update Face Image</label>
+                                <input type="file" name="face_image" accept="image/*" class="form-control" id="id_face_image">
+                                <div class="help-text">Upload a new face image to update the face encoding.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hidden fields for user_type, assigned_course, is_active to preserve their values -->
+                    <input type="hidden" name="user_type" value="{{ form.user_type.value }}">
+                    <input type="hidden" name="assigned_course" value="{{ form.assigned_course.value|default:'' }}">
+                    <input type="hidden" name="is_active" value="{{ form.is_active.value|default:'on' }}">
+
+                    <div class="d-flex gap-3 mt-3">
+                        <button type="submit" class="btn btn-primary btn-3d"><i class="fas fa-save"></i> Update</button>
+                        <a href="javascript:history.back()" class="btn btn-secondary btn-3d">Cancel</a>
+                        <button type="submit" name="delete" value="1" class="btn btn-danger btn-3d ms-auto" onclick="return confirm('Delete this user? This action cannot be undone.')">
+                            <i class="fas fa-trash"></i> Delete User
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ======================== STUDENT ATTENDANCE & ENROLLMENTS ======================== -->
+        {% if user_obj.user_type == 'student' and profile %}
+        <div class="card">
+            <div class="card-header"><h5><i class="fas fa-calendar-check me-2"></i> Attendance Overview</h5></div>
+            <div class="card-body">
+                {% with enrollments=profile.studentenrollment_set.all %}
+                {% if enrollments %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Semester</th>
+                                <th>Section</th>
+                                <th>Subject</th>
+                                <th>Present / Total</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in enrollments %}
+                                {% for subject in enrollment.subjects.all %}
+                                <tr>
+                                    <td>{{ enrollment.course.code }}</td>
+                                    <td>{{ enrollment.semester }}</td>
+                                    <td>{{ enrollment.section.name }}</td>
+                                    <td>{{ subject.code }} - {{ subject.name }}</td>
+                                    {% with sessions=subject.attendancesession_set.all %}
+                                        {% with total=sessions.count %}
+                                            {% with present=profile.attendancerecord_set.all|length %}
+                                                <td>{{ present }}/{{ total }}</td>
+                                                <td>{% if total > 0 %}{% widthratio present total 100 %}%{% else %}—{% endif %}</td>
+                                            {% endwith %}
+                                        {% endwith %}
+                                    {% endwith %}
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">Student is not enrolled in any course.</p>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- ======================== LECTURER SESSIONS ======================== -->
+        {% if user_obj.user_type == 'lecturer' %}
+        <div class="card">
+            <div class="card-header"><h5><i class="fas fa-chalkboard-teacher me-2"></i> Sessions Conducted</h5></div>
+            <div class="card-body">
+                {% with sessions=user_obj.attendancesession_set.all %}
+                {% if sessions %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Course</th>
+                                <th>Semester</th>
+                                <th>Section</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for session in sessions %}
+                            <tr>
+                                <td>{{ session.subject.code }}</td>
+                                <td>{{ session.course.code }}</td>
+                                <td>{{ session.semester }}</td>
+                                <td>{{ session.section.name }}</td>
+                                <td>{{ session.created_at|date:"d M Y H:i" }}</td>
+                                <td>{% if session.is_active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-secondary">Ended</span>{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-muted">No sessions conducted yet.</p>
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!-- templates/admin/admin_register_choice.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #eef1f5; padding: 20px; }
+        .navbar { background: linear-gradient(145deg, #0d1b4a, #1a2a6c); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .choice-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: #1a2a6c;
+            display: block;
+        }
+        .choice-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.2);
+        }
+        .choice-card i { font-size: 4rem; margin-bottom: 20px; color: #1a2a6c; }
+        .choice-card h4 { font-weight: 600; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'admin_dashboard' %}"><i class="fas fa-university"></i> Admin Panel</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <h2 class="mb-4">Select User Type to Register</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <a href="{% url 'admin_register_student' %}" class="choice-card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h4>Student</h4>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'admin_register_teaching' %}" class="choice-card">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h4>Teaching Staff</h4>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="{% url 'admin_register_nonteaching' %}" class="choice-card">
+                    <i class="fas fa-users-cog"></i>
+                    <h4>Non-Teaching Staff</h4>
+                </a>
+            </div>
+                <!-- New Bulk Registration Card -->
+            <div class="col-md-4">
+                <a href="{% url 'admin_bulk_register' %}" class="choice-card" style="background: linear-gradient(145deg, #2d3e8f, #1a2a6c); color: #fff;">
+                    <i class="fas fa-file-excel" style="color: #fff;"></i>
+                    <h4 style="color: #fff;">Bulk Import</h4>
+                    <small style="color: rgba(255,255,255,0.7);">Upload Excel file</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

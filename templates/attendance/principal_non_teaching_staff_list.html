@@ -1,0 +1,168 @@
+<!-- templates/attendance/principal_non_teaching_staff_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Non-Teaching Staff - Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* ── same styles as before ── */
+        body { background: #eef1f5; padding: 20px; font-family: 'Segoe UI', Roboto, system-ui, sans-serif; }
+        .navbar { background: linear-gradient(145deg, #0d1b4a, #1a2a6c); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 30px; padding: 12px 20px; }
+        .navbar-brand, .nav-link { color: #fff !important; font-weight: 500; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
+        .nav-link:hover { color: #c7d2fe !important; transform: translateY(-1px); }
+        .card { border: none; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.12), 0 4px 10px rgba(0,0,0,0.05); transition: box-shadow 0.3s ease; overflow: hidden; }
+        .card:hover { box-shadow: 0 18px 45px rgba(0,0,0,0.18), 0 6px 14px rgba(0,0,0,0.06); }
+        .card-header { background: linear-gradient(135deg, #1a2a6c, #2d3e8f); color: white; border-radius: 16px 16px 0 0 !important; padding: 18px 24px; border-bottom: none; }
+        .card-header h5 { font-weight: 600; letter-spacing: 0.3px; }
+        .card-body { padding: 24px; background: #fff; }
+        .form-label { font-weight: 600; color: #1a2a6c; font-size: 0.9rem; }
+        .form-control, .form-select { border-radius: 10px; border: 1px solid #dce1e8; padding: 10px 14px; background: #fafbfc; }
+        .form-control:focus, .form-select:focus { border-color: #2d3e8f; box-shadow: 0 0 0 3px rgba(26,42,108,0.15); }
+        .filter-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .filter-actions .btn { min-width: 100px; padding: 10px 20px; font-weight: 600; border: none; border-radius: 10px; transition: all 0.15s ease; box-shadow: 0 4px 8px rgba(0,0,0,0.15); }
+        .btn-clear { background: #f8fafc; border: 1px solid #cbd5e1; color: #1a2a6c; }
+        .btn-clear:hover { background: #ffffff; border-color: #1a2a6c; transform: translateY(-2px); }
+        .btn-3d { box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.15s; }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .table { margin-top: 8px; border-collapse: separate; border-spacing: 0 4px; }
+        .table thead th { background: #f1f4f9; border: none; padding: 14px 12px; font-weight: 600; color: #1a2a6c; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+        .table thead th.text-center, .table tbody td.text-center { text-align: center !important; vertical-align: middle; }
+        .table tbody tr { background: #fff; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.03); transition: all 0.15s ease; cursor: pointer; }
+        .table tbody tr:hover { background: #f8faff; transform: scale(1.01) translateY(-2px); box-shadow: 0 6px 18px rgba(26,42,108,0.12); }
+        .table tbody td { border: none; padding: 14px 12px; vertical-align: middle; border-bottom: 1px solid #f0f2f5; }
+        .table tbody tr:last-child td { border-bottom: none; }
+        .badge { padding: 6px 14px; border-radius: 30px; font-weight: 500; font-size: 0.75rem; background: linear-gradient(145deg, #1a2a6c, #2d3e8f); }
+        .percentage-high { color: #28a745; font-weight: 700; }
+        .percentage-medium { color: #ffc107; font-weight: 700; }
+        .percentage-low { color: #dc3545; font-weight: 700; }
+        @media (max-width: 768px) { .filter-actions .btn { min-width: 80px; padding: 8px 14px; } }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'principal_dashboard' %}"><i class="fas fa-university"></i> Attendance System</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4" style="color: #1a2a6c; font-weight: 700;">
+            <i class="fas fa-user-cog" style="color: #2d3e8f;"></i> Non-Teaching Staff
+        </h2>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-address-card me-2"></i>Total: {{ staff_data|length }}</h5>
+            </div>
+            <div class="card-body">
+                <!-- Export -->
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                    <a href="?{{ request.GET.urlencode }}&export=excel" class="btn btn-success btn-3d"><i class="fas fa-file-excel"></i> Export Excel</a>
+                    <a href="?{{ request.GET.urlencode }}&export=pdf" class="btn btn-danger btn-3d"><i class="fas fa-file-pdf"></i> Export PDF</a>
+                </div>
+
+                <!-- Filter Form – removed course, added designation -->
+                <form method="GET" action="" id="filterForm" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label for="search" class="form-label"><i class="fas fa-search me-1"></i>Search</label>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Name, username, email..." value="{{ search }}">
+                    </div>
+                    <div class="col-md-3">
+                        <label for="designation" class="form-label"><i class="fas fa-user-tag me-1"></i>Designation</label>
+                        <select class="form-select" id="designation" name="designation">
+                            <option value="">All Designations</option>
+                            {% for designation in designations %}
+                            <option value="{{ designation }}" {% if selected_designation == designation %}selected{% endif %}>
+                                {{ designation }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="from_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>From</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date" value="{{ from_date }}">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="to_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>To</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date" value="{{ to_date }}">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <div class="filter-actions">
+                            <button type="button" class="btn btn-clear" id="clearBtn"><i class="fas fa-undo-alt me-1"></i> Clear</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Table – removed Assigned Course column, added Designation -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th class="text-center">Designation</th>
+                                <th class="text-center">Attendance %</th>
+                                <th class="text-center">Present / Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in staff_data %}
+                            <tr onclick="window.location='{% url 'principal_non_teaching_staff_detail' entry.user.id %}'">
+                                <td><strong>{{ entry.user.get_full_name }}</strong></td>
+                                <td>{{ entry.user.username }}</td>
+                                <td class="text-center">{{ entry.designation }}</td>  <!-- change here -->
+                                <td class="text-center">
+                                    <span class="{% if entry.percentage >= 75 %}percentage-high{% elif entry.percentage >= 50 %}percentage-medium{% else %}percentage-low{% endif %}">
+                                        {{ entry.percentage }}%
+                                    </span>
+                                </td>
+                                <td class="text-center">{{ entry.present_count }} / {{ entry.total_working_days }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="5" class="text-center py-4 text-muted">No non-teaching staff found.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const form = document.getElementById('filterForm');
+            const searchInput = document.getElementById('search');
+            const designationSelect = document.getElementById('designation');
+            const fromDate = document.getElementById('from_date');
+            const toDate = document.getElementById('to_date');
+            const clearBtn = document.getElementById('clearBtn');
+            let debounceTimer = null;
+            function submitForm() { form.submit(); }
+            designationSelect.addEventListener('change', submitForm);
+            fromDate.addEventListener('change', submitForm);
+            toDate.addEventListener('change', submitForm);
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(submitForm, 300);
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') { e.preventDefault(); clearTimeout(debounceTimer); submitForm(); }
+            });
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                designationSelect.value = '';
+                fromDate.value = '';
+                toDate.value = '';
+                form.submit();
+            });
+        })();
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

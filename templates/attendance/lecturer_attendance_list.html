@@ -1,0 +1,106 @@
+<!-- templates/attendance/lecturer_attendance_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ type }} Attendance Records</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f0f2f5; padding: 20px; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .card { border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border-radius: 16px 16px 0 0 !important; }
+        .table tbody tr:hover { background: #f0f2fa; }
+        .badge-present { background: #28a745; }
+        .badge-absent { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'lecturer_history' %}"><i class="fas fa-arrow-left"></i> History</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">{{ type }} Attendance Records</h2>
+        <div class="card">
+            <div class="card-header"><h5 class="mb-0">Total: {{ records.count }}</h5></div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                {% if type == 'Student' %}
+                                <th>Student</th>
+                                <th>Roll No</th>
+                                <th>Subject</th>
+                                <th>Course</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Face</th>
+                                <th>Location</th>
+                                {% else %}
+                                <th>Date</th>
+                                <th>Time In</th>
+                                <th>Time Out</th>
+                                <th>Status</th>
+                                <th>Face Verified</th>
+                                <th>Location Verified</th>
+                                {% endif %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if type == 'Student' %}
+                                {% for rec in records %}
+                                <tr>
+                                    <td>{{ rec.student.user.get_full_name }}</td>
+                                    <td>{{ rec.student.roll_no }}</td>
+                                    <td>{{ rec.session.subject.name }}</td>
+                                    <td>{{ rec.session.course.code }}</td>
+                                    <td>{{ rec.timestamp|date:"d M Y" }}</td>
+                                    <td>
+                                        <span class="badge {% if rec.status == 'Present' %}badge-present{% else %}badge-absent{% endif %}">
+                                            {{ rec.status }}
+                                        </span>
+                                    </td>
+                                    <td>{% if rec.face_verified %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                    <td>{% if rec.location_verified %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="8" class="text-center py-4 text-muted">No records found.</td></tr>
+                                {% endfor %}
+                            {% else %}
+                                {% for rec in records %}
+                                <tr>
+                                    <td>{{ rec.date|date:"d M Y" }}</td>
+                                    <td>{{ rec.time_in|date:"h:i A" }}</td>
+                                    <td>{{ rec.time_out|date:"h:i A"|default:"—" }}</td>
+                                    <td>
+                                        <span class="badge {% if rec.status == 'present' %}badge-present{% else %}badge-absent{% endif %}">
+                                            {{ rec.status|title }}
+                                        </span>
+                                    </td>
+                                    <td>{% if rec.face_verified %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                    <td>{% if rec.location_verified %}<i class="fas fa-check-circle text-success"></i>{% else %}<i class="fas fa-times-circle text-danger"></i>{% endif %}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="6" class="text-center py-4 text-muted">No records found.</td></tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

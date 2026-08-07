@@ -1,0 +1,188 @@
+<!-- templates/attendance/student_attendance_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <title>Student Attendance Detail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            background: #f0f2f5;
+            padding: 12px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            border-radius: 12px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+        }
+        .navbar .container-fluid { flex-wrap: wrap; padding: 0; }
+        .navbar-brand {
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .navbar .d-flex { display: flex; gap: 8px; flex-wrap: wrap; }
+        .navbar .nav-link {
+            color: rgba(255,255,255,0.92) !important;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .navbar .nav-link:hover { background: rgba(255,255,255,0.15); }
+        .card {
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin-bottom: 18px;
+            border: none;
+            overflow: hidden;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: #fff;
+            border-radius: 14px 14px 0 0 !important;
+            padding: 14px 18px;
+        }
+        .card-header h4 { font-size: 1.05rem; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .card-body { padding: 16px 18px; }
+        .student-info {
+            background: #fff;
+            border-radius: 14px;
+            padding: 18px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+        .student-info h3 { font-size: 1.3rem; margin-bottom: 10px; }
+        .student-info .row { font-size: 0.95rem; }
+        .progress { height: 22px; border-radius: 12px; }
+        .attendance-high { color: #28a745; font-weight: 600; }
+        .attendance-medium { color: #ffc107; font-weight: 600; }
+        .attendance-low { color: #dc3545; font-weight: 600; }
+        .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .table { font-size: 0.8rem; min-width: 400px; }
+        .table thead th { font-size: 0.7rem; text-transform: uppercase; padding: 8px 6px; }
+        .table tbody td { padding: 8px 6px; vertical-align: middle; }
+        .semester-section { margin-bottom: 24px; }
+        .btn-secondary { min-height: 40px; border-radius: 10px; }
+        @media (min-width: 576px) {
+            body { padding: 16px; }
+            .navbar { padding: 12px 20px; }
+            .card-header { padding: 16px 22px; }
+            .card-body { padding: 18px 22px; }
+            .student-info { padding: 24px; }
+        }
+        @media (min-width: 768px) {
+            body { padding: 24px; }
+            .navbar { padding: 14px 28px; }
+            .student-info h3 { font-size: 1.6rem; }
+            .table { font-size: 0.9rem; min-width: auto; }
+        }
+        @media (min-width: 992px) { body { padding: 30px 40px; } }
+        .badge { font-weight: 500; }
+        .btn-3d {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: all 0.15s;
+}
+.btn-3d:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'principal_dashboard' %}"><i class="fas fa-university"></i> Attendance System</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        
+        <div class="student-info">
+            <div class="row align-items-center">
+                <div class="col-3 col-sm-2 text-center"><i class="fas fa-user-circle fa-4x text-muted"></i></div>
+                <div class="col-9 col-sm-10">
+                    <h3>{{ student_profile.user.get_full_name }}</h3>
+                    <div class="row g-1">
+                        <div class="col-6 col-md-4"><strong>UUCMS ID:</strong> {{ student_profile.roll_no }}</div>
+                        <div class="col-6 col-md-4"><strong>Department:</strong> {{ student_profile.department }}</div>
+                        <div class="col-6 col-md-4"><strong>Email:</strong> {{ student_profile.user.email }}</div>
+                        <div class="col-6 col-md-4"><strong>Phone:</strong> {{ student_profile.user.phone_number|default:"N/A" }}</div>
+                        <div class="col-6 col-md-4"><strong>Course:</strong> {{ course.code }} - {{ course.name }}</div>
+                        <div class="col-6 col-md-4"><strong>Type:</strong> {{ course.get_course_type_display }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Export buttons -->
+<div class="d-flex gap-2 mb-3 flex-wrap">
+    <a href="?export=excel" class="btn btn-success btn-3d">
+        <i class="fas fa-file-excel"></i> Export Excel
+    </a>
+    <a href="?export=pdf" class="btn btn-danger btn-3d">
+        <i class="fas fa-file-pdf"></i> Export PDF
+    </a>
+</div>
+        {% for sem_data in attendance_details %}
+        <div class="semester-section">
+            <div class="card">
+                <div class="card-header"><h4>Semester {{ sem_data.semester }} | Section {{ sem_data.section.name }}</h4></div>
+                <div class="card-body">
+                    {% for sub_data in sem_data.subjects %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5>{{ sub_data.subject.code }} - {{ sub_data.subject.name }}</h5>
+                            <div class="row g-2 mb-2">
+                                <div class="col-4 col-md-3"><strong>Total:</strong> {{ sub_data.total_classes }}</div>
+                                <div class="col-4 col-md-3"><span class="attendance-high"><strong>Present:</strong> {{ sub_data.present_count }}</span></div>
+                                <div class="col-4 col-md-3"><span class="attendance-low"><strong>Absent:</strong> {{ sub_data.absent_count }}</span></div>
+                                <div class="col-12 col-md-3"><span class="{% if sub_data.percentage >= 75 %}attendance-high{% elif sub_data.percentage >= 60 %}attendance-medium{% else %}attendance-low{% endif %}"><strong>%:</strong> {{ sub_data.percentage }}%</span></div>
+                            </div>
+                            <div class="progress mb-3">
+                                <div class="progress-bar {% if sub_data.percentage >= 75 %}bg-success{% elif sub_data.percentage >= 60 %}bg-warning{% else %}bg-danger{% endif %}" style="width: {{ sub_data.percentage }}%;">{{ sub_data.percentage }}%</div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead class="table-light"><tr><th>Date</th><th>Status</th><th>Face</th><th>Location</th></tr></thead>
+                                    <tbody>
+                                        {% for record in sub_data.session_records %}
+                                        <tr>
+                                            <td>{{ record.date|date:"d M Y h:i A" }}</td>
+                                            <td>{% if record.status == 'Present' %}<span class="badge bg-success">Present</span>{% else %}<span class="badge bg-danger">Absent</span>{% endif %}</td>
+                                            <td>{% if record.face_verified %}<span class="badge bg-success"><i class="fas fa-check"></i></span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i></span>{% endif %}</td>
+                                            <td>{% if record.location_verified %}<span class="badge bg-success"><i class="fas fa-check"></i></span>{% else %}<span class="badge bg-danger"><i class="fas fa-times"></i></span>{% endif %}</td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr><td colspan="4" class="text-center text-muted">No records</td></tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info">No enrollment data found.</div>
+        {% endfor %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

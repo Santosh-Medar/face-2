@@ -1,0 +1,143 @@
+<!-- templates/accounts/edit_profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        .navbar-brand {
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-graduation-cap"></i> Attendance System
+            </a>
+            <div class="d-flex">
+                <a href="{% url 'profile' %}" class="nav-link">
+                    <i class="fas fa-arrow-left"></i> Back to Profile
+                </a>
+                <a href="{% url 'logout' %}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </h5>
+                    </div>
+                    <div class="card-body p-4">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        <form method="POST">
+                            {% csrf_token %}
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="first_name" class="form-label">First Name</label>
+                                    <input type="text" class="form-control" id="first_name" name="first_name" 
+                                           value="{{ user.first_name }}" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="last_name" class="form-label">Last Name</label>
+                                    <input type="text" class="form-control" id="last_name" name="last_name" 
+                                           value="{{ user.last_name }}" required>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" 
+                                       value="{{ user.email }}" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone_number" name="phone_number" 
+                                       value="{{ user.phone_number }}">
+                            </div>
+                            
+                            {% if user.user_type == 'student' %}
+                                <div class="mb-3">
+                                    <label for="department" class="form-label">Department</label>
+                                    <select class="form-select" id="department" name="department" required>
+                                        <option value="Computer Science" {% if student_profile.department == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                                        <option value="Information Technology" {% if student_profile.department == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                                        <option value="Electronics" {% if student_profile.department == 'Electronics' %}selected{% endif %}>Electronics</option>
+                                        <option value="Mechanical" {% if student_profile.department == 'Mechanical' %}selected{% endif %}>Mechanical</option>
+                                        <option value="Civil" {% if student_profile.department == 'Civil' %}selected{% endif %}>Civil</option>
+                                    </select>
+                                </div>
+                            {% endif %}
+                            
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save"></i> Save Changes
+                                </button>
+                                <a href="{% url 'profile' %}" class="btn btn-secondary">
+                                    <i class="fas fa-times"></i> Cancel
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: attendance_system
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app           # For development live code reload
+      - media_data:/app/media
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings
+    restart: unless-stopped
+
+volumes:
+  media_data:

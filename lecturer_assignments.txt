@@ -1,0 +1,308 @@
+Lecturer - Subject Assignments
+============================================================
+Lecturer: EMP101 (Rahul Yadav)
+  Subjects (3):
+    - 24BALGEN1L : Basic English (Sem 1, BA)
+    - 24BALGHN1L : Kahani Kunja Aur Vyakaran (Hindi) (Sem 1, BA)
+    - 24BALGKA1L : ಕಲಾ ಸೌರಭ (Kannada) (Sem 1, BA)
+
+Lecturer: EMP102 (Shaurya Jha)
+  Subjects (3):
+    - 24CVCOMM1L : Constitutional Values (Sem 1, BA)
+    - 24MJECO1LT : Principles of Microeconomics (Sem 1, BA)
+    - 24MJENG1LT : Chaucer to Milton Age (Sem 1, BA)
+
+Lecturer: EMP103 (Kavya Yadav)
+  Subjects (3):
+    - 24MJHSA1LT : History of Ancient India-Part-I (Early Times to the Shatavahans) (Sem 1, BA)
+    - 24MJKAN1LT : ಪ್ರಾಚೀನ ಮತ್ತು ಮಧ್ಯಕಾಲಿನ ಕನ್ನಡ ಸಾಹಿತ್ಯ ಚರಿತ್ರೆ (Sem 1, BA)
+    - 24MJPOS1LT : Basic Principles of Political Science (Sem 1, BA)
+
+Lecturer: EMP104 (Amit Yadav)
+  Subjects (3):
+    - 24BALGEN3L : Basic English (Sem 3, BA)
+    - 24BALGHN3L : Hindi (Sem 3, BA)
+    - 24BALGKA3L : ಕಲಾ ಸೌರಭ - 2 (Kannada) (Sem 3, BA)
+
+Lecturer: EMP105 (Krishna Jha)
+  Subjects (3):
+    - 24MJECO3LT : Elementary Statistics for Economics (Sem 3, BA)
+    - 24MJENG3LT : Victorian to Modern Period (Sem 3, BA)
+    - 24MJHSA3EL : Concise History of Karnataka(Early to 1565 CE) (Sem 3, BA)
+
+Lecturer: EMP106 (Amit Rao)
+  Subjects (3):
+    - 24MJHSA3LT : History of Medieval India-Part-I(From 1206 CE -1526 CE) (Sem 3, BA)
+    - 24MJKAN3LT : ಭಾರತೀಯ ಮತ್ತು ಪಾಶ್ಚಾತ್ಯ ಕಾವ್ಯ ಮೀಮಾಂಸೆ (Sem 3, BA)
+    - 24MJPOS3LT : Government and Politics of Karnataka (Sem 3, BA)
+
+Lecturer: EMP107 (Navya Khan)
+  Subjects (3):
+    - 24BALGEN5L : Basic English (Sem 5, BA)
+    - 24BALGHN5L : Hindi (Sem 5, BA)
+    - 24BALGKA5L : ಕಲಾ ಸೌರಭ - 3 (Kannada) (Sem 5, BA)
+
+Lecturer: EMP108 (Vihaan Sharma)
+  Subjects (3):
+    - 24CVCOMM5L : Constitutional Values (Sem 5, BA)
+    - 24MJECO5LT : Macroeconomics (Sem 5, BA)
+    - 24MJENG5LT : Literary Criticism and Theory (Sem 5, BA)
+
+Lecturer: EMP109 (Pooja Yadav)
+  Subjects (3):
+    - 24MJHSA5LT : History of Modern India (1857-1947) (Sem 5, BA)
+    - 24MJKAN5LT : ಕನ್ನಡ ಸಾಹಿತ್ಯ ವಿಮರ್ಶೆ (Sem 5, BA)
+    - 24MJPOS5LT : International Relations (Sem 5, BA)
+
+Lecturer: EMP110 (Shaurya Sharma)
+  Subjects (3):
+    - 24BBLGEN1L : Basic English (BBA & BCOM) (Sem 1, BBA)
+    - 24BBLGHN1L : Gadya Chayan Aur Vanijya Patrachar (Hindi) (Sem 1, BBA)
+    - 24BBLGKA1L : ವಾಣಿಜ್ಯ ಸೌರಭ (Kannada) (Sem 1, BBA)
+
+Lecturer: EMP111 (Riya Yadav)
+  Subjects (3):
+    - 24ESCOMM1L : Environmental Science (BBA & BCOM) (Sem 1, BBA)
+    - 24MJBBA1L1 : Principles and Practices of Management (Sem 1, BBA)
+    - 24MJBBA1L2 : Fundamentals of Business Accounting (Sem 1, BBA)
+
+Lecturer: EMP112 (Suman Reddy)
+  Subjects (3):
+    - 24MJBBA1L3 : Business Environment (Sem 1, BBA)
+    - 24MJBBA1L4 : Communication Skills for Managers (Sem 1, BBA)
+    - 24BBLGEN3L : Basic English (Sem 3, BBA)
+
+Lecturer: EMP113 (Shaurya Joshi)
+  Subjects (3):
+    - 24BBLGHN3L : Hindi (Sem 3, BBA)
+    - 24BBLGKA3L : ವಾಣಿಜ್ಯ ಸೌರಭ - 2 (Kannada) (Sem 3, BBA)
+    - 24MJBBA3FM : Financial Services and Markets (Sem 3, BBA)
+
+Lecturer: EMP114 (Dhruv Menon)
+  Subjects (3):
+    - 24MJBBA3L1 : Corporate Accounting and Reporting (Sem 3, BBA)
+    - 24MJBBA3L2 : Organizational Behaviour (Sem 3, BBA)
+    - 24MJBBA3L3 : Statistics for Business Decisions (Sem 3, BBA)
+
+Lecturer: EMP115 (Mohan Singh)
+  Subjects (3):
+    - 24SCBBA3L1 : IT for Business (SEC) (Sem 3, BBA)
+    - 24BBLGEN5L : Basic English (Sem 5, BBA)
+    - 24BBLGHN5L : Hindi (Sem 5, BBA)
+
+Lecturer: EMP116 (Shaurya Verma)
+  Subjects (3):
+    - 24BBLGKA5L : ವಾಣಿಜ್ಯ ಸೌರಭ - 3 (Kannada) (Sem 5, BBA)
+    - 24ESCOMM5L : Environmental Science (Sem 5, BBA)
+    - 24MJBBA5L1 : Business Research Methods (Sem 5, BBA)
+
+Lecturer: EMP117 (Vihaan Gupta)
+  Subjects (3):
+    - 24MJBBA5L2 : Financial Management (Sem 5, BBA)
+    - 24MJBBA5L3 : Strategic Management (Sem 5, BBA)
+    - 24MJBBA5L4 : Marketing Analytics (Sem 5, BBA)
+
+Lecturer: EMP118 (Kiran Tiwari)
+  Subjects (3):
+    - 24BCLGEN1L : Basic English (Sem 1, BCA)
+    - 24BCLGHN1L : Gadya Saurabh Aur Anuvad (Hindi) (Sem 1, BCA)
+    - 24BCLGKA1L : ವಿಜ್ಞಾನ ಸೌರಭ (Kannada) (Sem 1, BCA)
+
+Lecturer: EMP119 (Sai Verma)
+  Subjects (3):
+    - 24MJBCA1A3 : Discrete Mathematical Structures (Sem 1, BCA)
+    - 24MJBCA1L1 : Problem Solving Techniques (Sem 1, BCA)
+    - 24MJBCA1L2 : Computer Architecture (Sem 1, BCA)
+
+Lecturer: EMP120 (Vivaan Gowda)
+  Subjects (3):
+    - 24MJBCA1P1 : Problem Solving Techniques Lab (Sem 1, BCA)
+    - 24MJBCA1P2 : Computer Architecture Lab (Sem 1, BCA)
+    - 24BSLGEN3L : Basic English (Sem 3, BCA)
+
+Lecturer: EMP121 (Tanvi Shetty)
+  Subjects (3):
+    - 24BSLGHN3L : Hindi (Sem 3, BCA)
+    - 24BSLGKA3L : ವಿಜ್ಞಾನ ಸೌರಭ - 2 (Kannada) (Sem 3, BCA)
+    - 24MJBCA3L1 : Java Programming (Sem 3, BCA)
+
+Lecturer: EMP122 (Amit Gupta)
+  Subjects (3):
+    - 24MJBCA3L2 : Database Management System (Sem 3, BCA)
+    - 24MJBCA3L3 : Web Design (Sem 3, BCA)
+    - 24MJBCA3P1 : Java Programming Lab (Sem 3, BCA)
+
+Lecturer: EMP123 (Raj Kumar)
+  Subjects (3):
+    - 24MJBCA3P2 : Database Management System Lab (Sem 3, BCA)
+    - 24MJBCA3P3 : Web Design Lab (Sem 3, BCA)
+    - 24BSLGEN5L : Basic English (Sem 5, BCA)
+
+Lecturer: EMP124 (Diya Rao)
+  Subjects (3):
+    - 24BSLGHN5L : Hindi (Sem 5, BCA)
+    - 24BSLGKA5L : ವಿಜ್ಞಾನ ಸೌರಭ - 3 (Kannada) (Sem 5, BCA)
+    - 24CVCOMM5L : Constitutional Values (Sem 5, BCA)
+
+Lecturer: EMP125 (Sara Joshi)
+  Subjects (3):
+    - 24MJBCA5L1 : Web Development (Sem 5, BCA)
+    - 24MJBCA5L2 : Software Engineering (Sem 5, BCA)
+    - 24MJBCA5L3 : Data Structures and Algorithms (Sem 5, BCA)
+
+Lecturer: EMP126 (Mohan Malhotra)
+  Subjects (3):
+    - 24MJBCA5P1 : Web Development Lab (Sem 5, BCA)
+    - 24MJBCA5P3 : Data Structures and Algorithms Lab (Sem 5, BCA)
+    - 24CMLGEN1L : Basic English (Sem 1, BCOM)
+
+Lecturer: EMP127 (Rahul Patel)
+  Subjects (3):
+    - 24CMLGHN1L : Gadya Chayan Aur Vanijya Patrachar (Hindi) (Sem 1, BCOM)
+    - 24CMLGKA1L : ವಾಣಿಜ್ಯ ಸೌರಭ (Kannada) (Sem 1, BCOM)
+    - 24COMGC101 : Management Principles and Applications (Sem 1, BCOM)
+
+Lecturer: EMP128 (Rohit Das)
+  Subjects (3):
+    - 24COMGC102 : Business Analysis and Market Dynamics (Sem 1, BCOM)
+    - 24COMGC103 : Financial Accounting (Sem 1, BCOM)
+    - 24COMGC104 : Quantitative Techniques – I (Sem 1, BCOM)
+
+Lecturer: EMP129 (Mohan Bhat)
+  Subjects (3):
+    - 24ESCOMM1L : Environmental Science (Sem 1, BCOM)
+    - 24CMLGEN3L : Basic English (Sem 3, BCOM)
+    - 24CMLGHN3L : Hindi (Sem 3, BCOM)
+
+Lecturer: EMP130 (Raj Jha)
+  Subjects (3):
+    - 24CMLGKA3L : ವಾಣಿಜ್ಯ ಸೌರಭ - 2 (Kannada) (Sem 3, BCOM)
+    - 24COMGC309 : Corporate Administration (Sem 3, BCOM)
+    - 24COMGC310 : Marketing Management (Sem 3, BCOM)
+
+Lecturer: EMP131 (Navya Joshi)
+  Subjects (3):
+    - 24COMGC311 : Corporate Accounting (Sem 3, BCOM)
+    - 24COMGC312 : Cost Accounting (Sem 3, BCOM)
+    - 24COMGS301 : Accounting Software Tally (Sem 3, BCOM)
+
+Lecturer: EMP132 (Krishna Patel)
+  Subjects (3):
+    - 24CMLGEN5L : Basic English (Sem 5, BCOM)
+    - 24CMLGHN5L : Hindi (Sem 5, BCOM)
+    - 24CMLGKA5L : ವಾಣಿಜ್ಯ ಸೌರಭ - 3 (Kannada) (Sem 5, BCOM)
+
+Lecturer: EMP133 (Aryan Verma)
+  Subjects (3):
+    - 24COMGC5L1 : Advanced Financial Accounting (Sem 5, BCOM)
+    - 24COMGC5L2 : Taxation (Sem 5, BCOM)
+    - 24COMGC5L3 : Cost Management (Sem 5, BCOM)
+
+Lecturer: EMP134 (Ishita Shetty)
+  Subjects (3):
+    - 24COMGC5L4 : Auditing (Sem 5, BCOM)
+    - 24COMGS5P1 : Accounting Software (Tally) Lab (Sem 5, BCOM)
+    - 24ESCOMM5L : Environmental Science (Sem 5, BCOM)
+
+Lecturer: EMP135 (Raj Gowda)
+  Subjects (3):
+    - 24BSLGEN1L : Basic English (Sem 1, BSc)
+    - 24BSLGHN1L : Gadya Saurabh Aur Anuvad (Hindi) (Sem 1, BSc)
+    - 24BSLGKA1L : ವಿಜ್ಞಾನ ಸೌರಭ (Kannada) (Sem 1, BSc)
+
+Lecturer: EMP136 (Tanvi Menon)
+  Subjects (3):
+    - 24CVCOMM1L : Constitutional Values (Sem 1, BSc)
+    - 24MJBOTN1L : Microbial World (Sem 1, BSc)
+    - 24MJBOTN1P : Microbial World Lab (Sem 1, BSc)
+
+Lecturer: EMP137 (Aarav Joshi)
+  Subjects (3):
+    - 24MJCHEM1L : Chemistry-1 (Sem 1, BSc)
+    - 24MJCHEM1P : Chemistry Laboratory Course-I (Sem 1, BSc)
+    - 24MJCOMP1L : Programming in C (Sem 1, BSc)
+
+Lecturer: EMP138 (Arjun Verma)
+  Subjects (3):
+    - 24MJCOMP1P : Programming in C Lab (Sem 1, BSc)
+    - 24MJMATH1L : Differential calculus and Algebra-I (Sem 1, BSc)
+    - 24MJMATH1P : Differential calculus and Algebra-I Lab (Sem 1, BSc)
+
+Lecturer: EMP139 (Diya Reddy)
+  Subjects (3):
+    - 24MJPHYS1L : Mechanics and Properties of Matter (Sem 1, BSc)
+    - 24MJPHYS1P : Mechanics and Properties of Matter -Lab (Sem 1, BSc)
+    - 24MJZOOL1L : Biology of Non Chordate and Chordate (Sem 1, BSc)
+
+Lecturer: EMP140 (Ishita Tiwari)
+  Subjects (3):
+    - 24MJZOOL1P : Biology of Non Chordate and Chordate - Lab (Sem 1, BSc)
+    - 24BSLGEN3L : Basic English (Sem 3, BSc)
+    - 24BSLGHN3L : Hindi (Sem 3, BSc)
+
+Lecturer: EMP141 (Amit Patel)
+  Subjects (3):
+    - 24BSLGKA3L : ವಿಜ್ಞಾನ ಸೌರಭ - 2 (Kannada) (Sem 3, BSc)
+    - 24MJBOTN3L : Plant Histology, Anatomy And Reproductive Biology (Sem 3, BSc)
+    - 24MJBOTN3P : Plant Histology, Anatomy and Reproductive Biology Lab (Sem 3, BSc)
+
+Lecturer: EMP142 (Mohan Nair)
+  Subjects (3):
+    - 24MJBOTN3S : Phytochemistry and Pharmacognostic studies (Sem 3, BSc)
+    - 24MJCHEM3L : Chemistry-III (Sem 3, BSc)
+    - 24MJCHEM3P : Chemistry Laboratory Course-III (Sem 3, BSc)
+
+Lecturer: EMP143 (Sai Gupta)
+  Subjects (3):
+    - 24MJCOMP3L : Object Oriented Programming Using Java (Sem 3, BSc)
+    - 24MJCOMP3P : Object Oriented Programming Using Java (LAB) (Sem 3, BSc)
+    - 24MJMATH3L : Series and Sequences and Vector Calculus (Sem 3, BSc)
+
+Lecturer: EMP144 (Dhruv Khan)
+  Subjects (3):
+    - 24MJMATH3P : Series and Sequences and Vector Calculus Lab (Sem 3, BSc)
+    - 24MJPHYS3L : Electricity and Magnetism (Sem 3, BSc)
+    - 24MJPHYS3P : Electricity and Magnetism - Lab (Sem 3, BSc)
+
+Lecturer: EMP145 (Kavya Reddy)
+  Subjects (3):
+    - 24MJPHYS3S : Renewable energy and energy harvesting (Sem 3, BSc)
+    - 24MJZOOL3L : Biochemistry, Physiology and Comparative anatomy (Sem 3, BSc)
+    - 24MJZOOL3P : Biochemistry, Physiology and Comparative anatomy Lab (Sem 3, BSc)
+
+Lecturer: EMP146 (Krishna Rao)
+  Subjects (3):
+    - 24BSLGEN5L : Basic English (Sem 5, BSc)
+    - 24BSLGHN5L : Hindi (Sem 5, BSc)
+    - 24BSLGKA5L : ವಿಜ್ಞಾನ ಸೌರಭ - 3 (Kannada) (Sem 5, BSc)
+
+Lecturer: EMP147 (Shaurya Gowda)
+  Subjects (3):
+    - 24CVCOMM5L : Constitutional Values (Sem 5, BSc)
+    - 24MJBOTN5L : Plant Physiology and Ecology (Sem 5, BSc)
+    - 24MJBOTN5P : Plant Physiology and Ecology Lab (Sem 5, BSc)
+
+Lecturer: EMP148 (Dhruv Das)
+  Subjects (3):
+    - 24MJBOTN5S : Biotechnology SEC (Sem 5, BSc)
+    - 24MJCHEM5L : Chemistry-V (Sem 5, BSc)
+    - 24MJCHEM5P : Chemistry Lab-V (Sem 5, BSc)
+
+Lecturer: EMP149 (Krishna Bhat)
+  Subjects (3):
+    - 24MJCOMP5L : Database Management Systems (Sem 5, BSc)
+    - 24MJCOMP5P : DBMS Lab (Sem 5, BSc)
+    - 24MJMATH5L : Linear Algebra and Differential Equations (Sem 5, BSc)
+
+Lecturer: EMP150 (Vihaan Gupta)
+  Subjects (3):
+    - 24MJMATH5P : Linear Algebra and DE Lab (Sem 5, BSc)
+    - 24MJPHYS5L : Quantum Mechanics (Sem 5, BSc)
+    - 24MJPHYS5P : Quantum Mechanics Lab (Sem 5, BSc)
+
+Lecturer: EMP151 (Pari Shetty)
+  Subjects (3):
+    - 24MJPHYS5S : Renewable Energy SEC (Sem 5, BSc)
+    - 24MJZOOL5L : Animal Physiology and Genetics (Sem 5, BSc)
+    - 24MJZOOL5P : Animal Physiology and Genetics Lab (Sem 5, BSc)
+

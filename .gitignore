@@ -1,0 +1,7 @@
+cat > .gitignore << 'EOF'
+venv/
+*.pyc
+.env
+.vscode/
+.idea/
+EOF

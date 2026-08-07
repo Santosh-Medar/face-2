@@ -1,0 +1,316 @@
+<!-- templates/accounts/face_registration.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Registration - Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin-bottom: 30px;
+            border-radius: 10px;
+        }
+        .navbar-brand {
+            color: white !important;
+        }
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+        }
+        .nav-link:hover {
+            color: white !important;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+        }
+        #video {
+            border-radius: 10px;
+            width: 100%;
+            max-height: 400px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .btn-secondary {
+            background: #6c757d;
+            border: none;
+        }
+        .alert {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-graduation-cap"></i> Attendance System
+            </a>
+            <div class="d-flex">
+                <span class="nav-link">
+                    <i class="fas fa-user"></i> {{ user.get_full_name }}
+                </span>
+                <a href="{% url 'logout' %}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">
+            <i class="fas fa-camera"></i> Face Registration
+        </h2>
+        
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        <div class="row">
+            <div class="col-md-7">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-camera-retro"></i> Register Your Face
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-info-circle"></i> Instructions:</h6>
+                            <ul class="mb-0">
+                                <li>Ensure your face is clearly visible</li>
+                                <li>Good lighting conditions</li>
+                                <li>Remove sunglasses and masks</li>
+                                <li>Look directly at the camera</li>
+                                <li>Keep a neutral expression</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <video id="video" autoplay playsinline></video>
+                            <canvas id="canvas" style="display: none;"></canvas>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-lg" onclick="captureFace()">
+                                <i class="fas fa-camera"></i> Capture Face from Webcam
+                            </button>
+                            
+                            <hr>
+                            
+                            <p class="text-center fw-bold">OR</p>
+                            
+                            <form method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="mb-3">
+                                    <label class="form-label">
+                                        <i class="fas fa-upload"></i> Upload Photo
+                                    </label>
+                                    <input type="file" class="form-control" name="face_image" accept="image/*">
+                                </div>
+                                <button type="submit" class="btn btn-secondary w-100">
+                                    <i class="fas fa-cloud-upload-alt"></i> Upload and Register
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-5">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-id-card"></i> Student Information
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td><strong>Name:</strong></td>
+                                <td>{{ student_profile.user.get_full_name }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Roll No:</strong></td>
+                                <td><span class="badge bg-primary">{{ student_profile.roll_no }}</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Department:</strong></td>
+                                <td>{{ student_profile.department }}</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status:</strong></td>
+                                <td>
+                                    {% if student_profile.registration_complete %}
+                                        <span class="badge bg-success">Completed</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">Pending</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                        
+                        {% if student_profile.registration_complete %}
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i> Face registration completed!
+                            </div>
+                            <a href="{% url 'student_dashboard' %}" class="btn btn-success w-100">
+                                <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="fas fa-info-circle"></i> Capture Result
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="captureResult">
+                            <p class="text-muted">Capture your face to see the result here</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let stream = null;
+        
+        // Initialize camera
+        async function initCamera() {
+            try {
+                stream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                });
+                document.getElementById('video').srcObject = stream;
+            } catch (err) {
+                console.error('Camera error:', err);
+                document.getElementById('captureResult').innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle"></i> 
+                        Error accessing camera: ${err.message}
+                    </div>`;
+            }
+        }
+        
+        async function captureFace() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const resultDiv = document.getElementById('captureResult');
+            
+            if (!stream) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-warning">
+                        Camera not initialized. Please refresh the page.
+                    </div>`;
+                return;
+            }
+            
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0);
+            
+            const faceData = canvas.toDataURL('image/jpeg', 0.8);
+            
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Processing...</span>
+                    </div>
+                    <p class="mt-2">Processing face...</p>
+                </div>`;
+            
+            // Get CSRF token
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+            try {
+                const response = await fetch('/accounts/face-registration/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-CSRFToken': csrfToken
+                    },
+                    body: `face_data=${encodeURIComponent(faceData)}`
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle"></i> ${data.message}
+                        </div>
+                        <a href="/student/" class="btn btn-success w-100">
+                            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+                        </a>`;
+                    
+                    // Reload after 2 seconds to update status
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="alert alert-danger">
+                            <i class="fas fa-times-circle"></i> ${data.message}
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="captureFace()">
+                            <i class="fas fa-redo"></i> Try Again
+                        </button>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle"></i> 
+                        Error: ${error.message}
+                    </div>
+                    <button class="btn btn-primary w-100" onclick="captureFace()">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>`;
+            }
+        }
+        
+        // Initialize on page load
+        window.onload = initCamera;
+        
+        // Cleanup on page unload
+        window.onbeforeunload = function() {
+            if (stream) {
+                stream.getTracks().forEach(track => track.stop());
+            }
+        };
+    </script>
+</body>
+</html>

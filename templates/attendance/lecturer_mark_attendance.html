@@ -1,0 +1,262 @@
+<!-- templates/attendance/lecturer_mark_attendance.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mark Attendance - Lecturer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f5f5f5; padding: 20px; }
+        .navbar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .card { border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .card-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff; border-radius: 15px 15px 0 0 !important; }
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-placeholder {
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        .video-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.6;
+        }
+        #video { width: 100%; height: auto; max-height: 400px; object-fit: cover; display: none; }
+        .btn-success { background: #28a745; border: none; }
+        .btn-success:hover { transform: translateY(-2px); }
+        .btn-success:disabled { opacity: 0.5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'lecturer_dashboard' %}"><i class="fas fa-graduation-cap"></i> Attendance</a>
+            <div class="d-flex">
+                <a href="{% url 'lecturer_dashboard' %}" class="nav-link"><i class="fas fa-arrow-left"></i> Dashboard</a>
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4"><i class="fas fa-user-check"></i> Mark Your Attendance</h2>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"><h5><i class="fas fa-camera"></i> Face Capture</h5></div>
+                    <div class="card-body">
+                        <div class="video-container" id="videoContainer">
+                            <div class="video-placeholder" id="videoPlaceholder">
+                                <i class="fas fa-video-slash"></i>
+                                <p>Waiting for location verification...</p>
+                            </div>
+                            <video id="video" autoplay playsinline></video>
+                            <canvas id="canvas" style="display:none;"></canvas>
+                        </div>
+                        <button class="btn btn-success w-100 mt-3" id="captureBtn" disabled>
+                            <i class="fas fa-camera"></i> Capture & Mark Attendance
+                        </button>
+                        <div id="status" class="mt-3"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"><h5><i class="fas fa-info-circle"></i> Instructions</h5></div>
+                    <div class="card-body">
+                        <ul>
+                            <li>Ensure you are at the designated location.</li>
+                            <li>Allow camera and location access.</li>
+                            <li>Face should be clearly visible.</li>
+                            <li>Click "Capture & Mark Attendance".</li>
+                            <li>Location and face will be verified in real-time.</li>
+                        </ul>
+                        <div id="locationStatus" class="alert alert-secondary">Checking location...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}/ws/lecturer-attendance/`;
+        let ws = null;
+        let stream = null;
+        let locationVerified = false;
+        let cameraReady = false;
+        let processing = false;
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const statusDiv = document.getElementById('status');
+        const locationStatus = document.getElementById('locationStatus');
+        const captureBtn = document.getElementById('captureBtn');
+        const videoPlaceholder = document.getElementById('videoPlaceholder');
+
+        function connectWebSocket() {
+            ws = new WebSocket(wsUrl);
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+                checkLocation();
+            };
+            ws.onmessage = function(e) {
+                const data = JSON.parse(e.data);
+                if (data.type === 'location_status') {
+                    if (data.verified) {
+                        locationVerified = true;
+                        locationStatus.className = 'alert alert-success';
+                        locationStatus.innerHTML = `<i class="fas fa-check-circle"></i> Location verified (${data.distance} meters)`;
+                        // Start camera now that location is verified
+                        if (!cameraReady) {
+                            initCamera();
+                        }
+                    } else {
+                        locationVerified = false;
+                        locationStatus.className = 'alert alert-danger';
+                        locationStatus.innerHTML = `<i class="fas fa-times-circle"></i> ${data.message}`;
+                        captureBtn.disabled = true;
+                        // Show placeholder, hide video if camera was active
+                        if (cameraReady) {
+                            stopCamera();
+                        }
+                    }
+                } else if (data.type === 'attendance_result') {
+                    processing = false;
+                    captureBtn.disabled = false;
+                    if (data.success) {
+                        statusDiv.innerHTML = `<div class="alert alert-success"><i class="fas fa-check-circle"></i> ${data.message}</div>`;
+                        captureBtn.innerHTML = '<i class="fas fa-check"></i> Done!';
+                        captureBtn.disabled = true;
+                        setTimeout(() => {
+                            window.location.href = "{% url 'lecturer_dashboard' %}";
+                        }, 2000);
+                    } else {
+                        statusDiv.innerHTML = `<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> ${data.message}</div>`;
+                        captureBtn.innerHTML = '<i class="fas fa-camera"></i> Capture & Mark Attendance';
+                    }
+                }
+            };
+            ws.onerror = function(err) {
+                console.error('WebSocket error:', err);
+                locationStatus.className = 'alert alert-danger';
+                locationStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Connection error. Please refresh.';
+            };
+            ws.onclose = function() {
+                console.log('WebSocket closed');
+            };
+        }
+
+        function checkLocation() {
+            if (!navigator.geolocation) {
+                locationStatus.className = 'alert alert-danger';
+                locationStatus.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Geolocation not supported.';
+                return;
+            }
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    ws.send(JSON.stringify({
+                        action: 'check_location',
+                        latitude: lat,
+                        longitude: lon
+                    }));
+                },
+                (err) => {
+                    locationStatus.className = 'alert alert-danger';
+                    locationStatus.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Error: ${err.message}`;
+                }
+            );
+        }
+
+        function initCamera() {
+            if (cameraReady) return;
+            videoPlaceholder.style.display = 'none';
+            video.style.display = 'block';
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+                .then(function(streamObj) {
+                    stream = streamObj;
+                    video.srcObject = stream;
+                    cameraReady = true;
+                    captureBtn.disabled = false;
+                    statusDiv.innerHTML = '<div class="alert alert-success"><i class="fas fa-check"></i> Camera ready.</div>';
+                })
+                .catch(function(err) {
+                    statusDiv.innerHTML = `<div class="alert alert-danger">Camera error: ${err.message}</div>`;
+                    video.style.display = 'none';
+                    videoPlaceholder.style.display = 'block';
+                    videoPlaceholder.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p>Camera access denied.</p>`;
+                    captureBtn.disabled = true;
+                });
+        }
+
+        function stopCamera() {
+            if (stream) {
+                stream.getTracks().forEach(t => t.stop());
+                stream = null;
+            }
+            cameraReady = false;
+            video.style.display = 'none';
+            videoPlaceholder.style.display = 'block';
+            videoPlaceholder.innerHTML = `<i class="fas fa-video-slash"></i><p>Location not verified. Please move to the designated area.</p>`;
+            captureBtn.disabled = true;
+        }
+
+        function captureFace() {
+            if (!locationVerified) {
+                alert('Location not verified. Please check your location.');
+                return;
+            }
+            if (!cameraReady) {
+                alert('Camera not ready.');
+                return;
+            }
+            if (processing) return;
+            processing = true;
+            captureBtn.disabled = true;
+            captureBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            statusDiv.innerHTML = '<div class="alert alert-info">Processing...</div>';
+
+            const ctx = canvas.getContext('2d');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            ctx.drawImage(video, 0, 0);
+            const frameData = canvas.toDataURL('image/jpeg', 0.8);
+
+            ws.send(JSON.stringify({
+                action: 'mark_attendance',
+                frame: frameData
+            }));
+        }
+
+        // Initialize
+        window.onload = function() {
+            connectWebSocket();
+            // Camera will be started when location is verified
+        };
+
+        window.onbeforeunload = function() {
+            if (ws) ws.close();
+            if (stream) stream.getTracks().forEach(t => t.stop());
+        };
+
+        // Attach click listener to the button
+        document.getElementById('captureBtn').addEventListener('click', captureFace);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

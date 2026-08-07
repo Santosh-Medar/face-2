@@ -1,0 +1,157 @@
++-----+------------+------------------------------------------------------------------+-------------------------------------------+----------+
+| ID  |    CODE    |                               NAME                               |                  COURSE                   | SEMESTER |
++-----+------------+------------------------------------------------------------------+-------------------------------------------+----------+
+| 417 | 24BALGEN1L | Basic English                                                    | BA - Bachelor of Arts                     | 1        |
+| 420 | 24BALGHN1L | Kahani Kunja Aur Vyakaran (Hindi)                                | BA - Bachelor of Arts                     | 1        |
+| 419 | 24BALGKA1L | ಕಲಾ ಸೌರಭ (Kannada)                                               | BA - Bachelor of Arts                     | 1        |
+| 418 | 24CVCOMM1L | Constitutional Values                                            | BA - Bachelor of Arts                     | 1        |
+| 421 | 24MJECO1LT | Principles of Microeconomics                                     | BA - Bachelor of Arts                     | 1        |
+| 425 | 24MJENG1LT | Chaucer to Milton Age                                            | BA - Bachelor of Arts                     | 1        |
+| 422 | 24MJHSA1LT | History of Ancient India-Part-I (Early Times to the Shatavahans) | BA - Bachelor of Arts                     | 1        |
+| 423 | 24MJKAN1LT | ಪ್ರಾಚೀನ ಮತ್ತು ಮಧ್ಯಕಾಲಿನ ಕನ್ನಡ ಸಾಹಿತ್ಯ ಚರಿತ್ರೆ                    | BA - Bachelor of Arts                     | 1        |
+| 424 | 24MJPOS1LT | Basic Principles of Political Science                            | BA - Bachelor of Arts                     | 1        |
+| 426 | 24BALGEN3L | Basic English                                                    | BA - Bachelor of Arts                     | 3        |
+| 429 | 24BALGHN3L | Hindi                                                            | BA - Bachelor of Arts                     | 3        |
+| 428 | 24BALGKA3L | ಕಲಾ ಸೌರಭ - 2 (Kannada)                                           | BA - Bachelor of Arts                     | 3        |
+| 431 | 24MJECO3LT | Elementary Statistics for Economics                              | BA - Bachelor of Arts                     | 3        |
+| 434 | 24MJENG3LT | Victorian to Modern Period                                       | BA - Bachelor of Arts                     | 3        |
+| 427 | 24MJHSA3EL | Concise History of Karnataka(Early to 1565 CE)                   | BA - Bachelor of Arts                     | 3        |
+| 430 | 24MJHSA3LT | History of Medieval India-Part-I(From 1206 CE -1526 CE)          | BA - Bachelor of Arts                     | 3        |
+| 432 | 24MJKAN3LT | ಭಾರತೀಯ ಮತ್ತು ಪಾಶ್ಚಾತ್ಯ ಕಾವ್ಯ ಮೀಮಾಂಸೆ                             | BA - Bachelor of Arts                     | 3        |
+| 433 | 24MJPOS3LT | Government and Politics of Karnataka                             | BA - Bachelor of Arts                     | 3        |
+| 479 | 24BALGEN5L | Basic English                                                    | BA - Bachelor of Arts                     | 5        |
+| 481 | 24BALGHN5L | Hindi                                                            | BA - Bachelor of Arts                     | 5        |
+| 482 | 24BALGKA5L | ಕಲಾ ಸೌರಭ - 3 (Kannada)                                           | BA - Bachelor of Arts                     | 5        |
+| 480 | 24CVCOMM5L | Constitutional Values                                            | BA - Bachelor of Arts                     | 5        |
+| 484 | 24MJECO5LT | Macroeconomics                                                   | BA - Bachelor of Arts                     | 5        |
+| 487 | 24MJENG5LT | Literary Criticism and Theory                                    | BA - Bachelor of Arts                     | 5        |
+| 483 | 24MJHSA5LT | History of Modern India (1857-1947)                              | BA - Bachelor of Arts                     | 5        |
+| 485 | 24MJKAN5LT | ಕನ್ನಡ ಸಾಹಿತ್ಯ ವಿಮರ್ಶೆ                                            | BA - Bachelor of Arts                     | 5        |
+| 486 | 24MJPOS5LT | International Relations                                          | BA - Bachelor of Arts                     | 5        |
+| 356 | 24BBLGEN1L | Basic English (BBA & BCOM)                                       | BBA - Bachelor of Business Administration | 1        |
+| 358 | 24BBLGHN1L | Gadya Chayan Aur Vanijya Patrachar (Hindi)                       | BBA - Bachelor of Business Administration | 1        |
+| 359 | 24BBLGKA1L | ವಾಣಿಜ್ಯ ಸೌರಭ (Kannada)                                           | BBA - Bachelor of Business Administration | 1        |
+| 357 | 24ESCOMM1L | Environmental Science (BBA & BCOM)                               | BBA - Bachelor of Business Administration | 1        |
+| 352 | 24MJBBA1L1 | Principles and Practices of Management                           | BBA - Bachelor of Business Administration | 1        |
+| 353 | 24MJBBA1L2 | Fundamentals of Business Accounting                              | BBA - Bachelor of Business Administration | 1        |
+| 354 | 24MJBBA1L3 | Business Environment                                             | BBA - Bachelor of Business Administration | 1        |
+| 355 | 24MJBBA1L4 | Communication Skills for Managers                                | BBA - Bachelor of Business Administration | 1        |
+| 365 | 24BBLGEN3L | Basic English                                                    | BBA - Bachelor of Business Administration | 3        |
+| 366 | 24BBLGHN3L | Hindi                                                            | BBA - Bachelor of Business Administration | 3        |
+| 367 | 24BBLGKA3L | ವಾಣಿಜ್ಯ ಸೌರಭ - 2 (Kannada)                                       | BBA - Bachelor of Business Administration | 3        |
+| 364 | 24MJBBA3FM | Financial Services and Markets                                   | BBA - Bachelor of Business Administration | 3        |
+| 360 | 24MJBBA3L1 | Corporate Accounting and Reporting                               | BBA - Bachelor of Business Administration | 3        |
+| 361 | 24MJBBA3L2 | Organizational Behaviour                                         | BBA - Bachelor of Business Administration | 3        |
+| 362 | 24MJBBA3L3 | Statistics for Business Decisions                                | BBA - Bachelor of Business Administration | 3        |
+| 363 | 24SCBBA3L1 | IT for Business (SEC)                                            | BBA - Bachelor of Business Administration | 3        |
+| 444 | 24BBLGEN5L | Basic English                                                    | BBA - Bachelor of Business Administration | 5        |
+| 446 | 24BBLGHN5L | Hindi                                                            | BBA - Bachelor of Business Administration | 5        |
+| 447 | 24BBLGKA5L | ವಾಣಿಜ್ಯ ಸೌರಭ - 3 (Kannada)                                       | BBA - Bachelor of Business Administration | 5        |
+| 445 | 24ESCOMM5L | Environmental Science                                            | BBA - Bachelor of Business Administration | 5        |
+| 448 | 24MJBBA5L1 | Business Research Methods                                        | BBA - Bachelor of Business Administration | 5        |
+| 449 | 24MJBBA5L2 | Financial Management                                             | BBA - Bachelor of Business Administration | 5        |
+| 450 | 24MJBBA5L3 | Strategic Management                                             | BBA - Bachelor of Business Administration | 5        |
+| 451 | 24MJBBA5L4 | Marketing Analytics                                              | BBA - Bachelor of Business Administration | 5        |
+| 340 | 24BCLGEN1L | Basic English                                                    | BCA - Bachelor of Computer Applications   | 1        |
+| 341 | 24BCLGHN1L | Gadya Saurabh Aur Anuvad (Hindi)                                 | BCA - Bachelor of Computer Applications   | 1        |
+| 342 | 24BCLGKA1L | ವಿಜ್ಞಾನ ಸೌರಭ (Kannada)                                           | BCA - Bachelor of Computer Applications   | 1        |
+| 339 | 24MJBCA1A3 | Discrete Mathematical Structures                                 | BCA - Bachelor of Computer Applications   | 1        |
+| 335 | 24MJBCA1L1 | Problem Solving Techniques                                       | BCA - Bachelor of Computer Applications   | 1        |
+| 337 | 24MJBCA1L2 | Computer Architecture                                            | BCA - Bachelor of Computer Applications   | 1        |
+| 336 | 24MJBCA1P1 | Problem Solving Techniques Lab                                   | BCA - Bachelor of Computer Applications   | 1        |
+| 338 | 24MJBCA1P2 | Computer Architecture Lab                                        | BCA - Bachelor of Computer Applications   | 1        |
+| 343 | 24BSLGEN3L | Basic English                                                    | BCA - Bachelor of Computer Applications   | 3        |
+| 350 | 24BSLGHN3L | Hindi                                                            | BCA - Bachelor of Computer Applications   | 3        |
+| 351 | 24BSLGKA3L | ವಿಜ್ಞಾನ ಸೌರಭ - 2 (Kannada)                                       | BCA - Bachelor of Computer Applications   | 3        |
+| 344 | 24MJBCA3L1 | Java Programming                                                 | BCA - Bachelor of Computer Applications   | 3        |
+| 346 | 24MJBCA3L2 | Database Management System                                       | BCA - Bachelor of Computer Applications   | 3        |
+| 348 | 24MJBCA3L3 | Web Design                                                       | BCA - Bachelor of Computer Applications   | 3        |
+| 345 | 24MJBCA3P1 | Java Programming Lab                                             | BCA - Bachelor of Computer Applications   | 3        |
+| 347 | 24MJBCA3P2 | Database Management System Lab                                   | BCA - Bachelor of Computer Applications   | 3        |
+| 349 | 24MJBCA3P3 | Web Design Lab                                                   | BCA - Bachelor of Computer Applications   | 3        |
+| 435 | 24BSLGEN5L | Basic English                                                    | BCA - Bachelor of Computer Applications   | 5        |
+| 437 | 24BSLGHN5L | Hindi                                                            | BCA - Bachelor of Computer Applications   | 5        |
+| 438 | 24BSLGKA5L | ವಿಜ್ಞಾನ ಸೌರಭ - 3 (Kannada)                                       | BCA - Bachelor of Computer Applications   | 5        |
+| 436 | 24CVCOMM5L | Constitutional Values                                            | BCA - Bachelor of Computer Applications   | 5        |
+| 439 | 24MJBCA5L1 | Web Development                                                  | BCA - Bachelor of Computer Applications   | 5        |
+| 441 | 24MJBCA5L2 | Software Engineering                                             | BCA - Bachelor of Computer Applications   | 5        |
+| 442 | 24MJBCA5L3 | Data Structures and Algorithms                                   | BCA - Bachelor of Computer Applications   | 5        |
+| 440 | 24MJBCA5P1 | Web Development Lab                                              | BCA - Bachelor of Computer Applications   | 5        |
+| 443 | 24MJBCA5P3 | Data Structures and Algorithms Lab                               | BCA - Bachelor of Computer Applications   | 5        |
+| 372 | 24CMLGEN1L | Basic English                                                    | BCOM - Bachelor of Commerce               | 1        |
+| 374 | 24CMLGHN1L | Gadya Chayan Aur Vanijya Patrachar (Hindi)                       | BCOM - Bachelor of Commerce               | 1        |
+| 375 | 24CMLGKA1L | ವಾಣಿಜ್ಯ ಸೌರಭ (Kannada)                                           | BCOM - Bachelor of Commerce               | 1        |
+| 368 | 24COMGC101 | Management Principles and Applications                           | BCOM - Bachelor of Commerce               | 1        |
+| 369 | 24COMGC102 | Business Analysis and Market Dynamics                            | BCOM - Bachelor of Commerce               | 1        |
+| 370 | 24COMGC103 | Financial Accounting                                             | BCOM - Bachelor of Commerce               | 1        |
+| 371 | 24COMGC104 | Quantitative Techniques – I                                      | BCOM - Bachelor of Commerce               | 1        |
+| 373 | 24ESCOMM1L | Environmental Science                                            | BCOM - Bachelor of Commerce               | 1        |
+| 376 | 24CMLGEN3L | Basic English                                                    | BCOM - Bachelor of Commerce               | 3        |
+| 382 | 24CMLGHN3L | Hindi                                                            | BCOM - Bachelor of Commerce               | 3        |
+| 383 | 24CMLGKA3L | ವಾಣಿಜ್ಯ ಸೌರಭ - 2 (Kannada)                                       | BCOM - Bachelor of Commerce               | 3        |
+| 377 | 24COMGC309 | Corporate Administration                                         | BCOM - Bachelor of Commerce               | 3        |
+| 378 | 24COMGC310 | Marketing Management                                             | BCOM - Bachelor of Commerce               | 3        |
+| 379 | 24COMGC311 | Corporate Accounting                                             | BCOM - Bachelor of Commerce               | 3        |
+| 380 | 24COMGC312 | Cost Accounting                                                  | BCOM - Bachelor of Commerce               | 3        |
+| 381 | 24COMGS301 | Accounting Software Tally                                        | BCOM - Bachelor of Commerce               | 3        |
+| 452 | 24CMLGEN5L | Basic English                                                    | BCOM - Bachelor of Commerce               | 5        |
+| 454 | 24CMLGHN5L | Hindi                                                            | BCOM - Bachelor of Commerce               | 5        |
+| 455 | 24CMLGKA5L | ವಾಣಿಜ್ಯ ಸೌರಭ - 3 (Kannada)                                       | BCOM - Bachelor of Commerce               | 5        |
+| 456 | 24COMGC5L1 | Advanced Financial Accounting                                    | BCOM - Bachelor of Commerce               | 5        |
+| 457 | 24COMGC5L2 | Taxation                                                         | BCOM - Bachelor of Commerce               | 5        |
+| 458 | 24COMGC5L3 | Cost Management                                                  | BCOM - Bachelor of Commerce               | 5        |
+| 459 | 24COMGC5L4 | Auditing                                                         | BCOM - Bachelor of Commerce               | 5        |
+| 460 | 24COMGS5P1 | Accounting Software (Tally) Lab                                  | BCOM - Bachelor of Commerce               | 5        |
+| 453 | 24ESCOMM5L | Environmental Science                                            | BCOM - Bachelor of Commerce               | 5        |
+| 384 | 24BSLGEN1L | Basic English                                                    | BSc - Bachelor of Science                 | 1        |
+| 386 | 24BSLGHN1L | Gadya Saurabh Aur Anuvad (Hindi)                                 | BSc - Bachelor of Science                 | 1        |
+| 387 | 24BSLGKA1L | ವಿಜ್ಞಾನ ಸೌರಭ (Kannada)                                           | BSc - Bachelor of Science                 | 1        |
+| 385 | 24CVCOMM1L | Constitutional Values                                            | BSc - Bachelor of Science                 | 1        |
+| 388 | 24MJBOTN1L | Microbial World                                                  | BSc - Bachelor of Science                 | 1        |
+| 391 | 24MJBOTN1P | Microbial World Lab                                              | BSc - Bachelor of Science                 | 1        |
+| 389 | 24MJCHEM1L | Chemistry-1                                                      | BSc - Bachelor of Science                 | 1        |
+| 392 | 24MJCHEM1P | Chemistry Laboratory Course-I                                    | BSc - Bachelor of Science                 | 1        |
+| 398 | 24MJCOMP1L | Programming in C                                                 | BSc - Bachelor of Science                 | 1        |
+| 399 | 24MJCOMP1P | Programming in C Lab                                             | BSc - Bachelor of Science                 | 1        |
+| 394 | 24MJMATH1L | Differential calculus and Algebra-I                              | BSc - Bachelor of Science                 | 1        |
+| 396 | 24MJMATH1P | Differential calculus and Algebra-I Lab                          | BSc - Bachelor of Science                 | 1        |
+| 395 | 24MJPHYS1L | Mechanics and Properties of Matter                               | BSc - Bachelor of Science                 | 1        |
+| 397 | 24MJPHYS1P | Mechanics and Properties of Matter -Lab                          | BSc - Bachelor of Science                 | 1        |
+| 390 | 24MJZOOL1L | Biology of Non Chordate and Chordate                             | BSc - Bachelor of Science                 | 1        |
+| 393 | 24MJZOOL1P | Biology of Non Chordate and Chordate - Lab                       | BSc - Bachelor of Science                 | 1        |
+| 400 | 24BSLGEN3L | Basic English                                                    | BSc - Bachelor of Science                 | 3        |
+| 401 | 24BSLGHN3L | Hindi                                                            | BSc - Bachelor of Science                 | 3        |
+| 402 | 24BSLGKA3L | ವಿಜ್ಞಾನ ಸೌರಭ - 2 (Kannada)                                       | BSc - Bachelor of Science                 | 3        |
+| 404 | 24MJBOTN3L | Plant Histology, Anatomy And Reproductive Biology                | BSc - Bachelor of Science                 | 3        |
+| 407 | 24MJBOTN3P | Plant Histology, Anatomy and Reproductive Biology Lab            | BSc - Bachelor of Science                 | 3        |
+| 409 | 24MJBOTN3S | Phytochemistry and Pharmacognostic studies                       | BSc - Bachelor of Science                 | 3        |
+| 403 | 24MJCHEM3L | Chemistry-III                                                    | BSc - Bachelor of Science                 | 3        |
+| 406 | 24MJCHEM3P | Chemistry Laboratory Course-III                                  | BSc - Bachelor of Science                 | 3        |
+| 415 | 24MJCOMP3L | Object Oriented Programming Using Java                           | BSc - Bachelor of Science                 | 3        |
+| 416 | 24MJCOMP3P | Object Oriented Programming Using Java (LAB)                     | BSc - Bachelor of Science                 | 3        |
+| 411 | 24MJMATH3L | Series and Sequences and Vector Calculus                         | BSc - Bachelor of Science                 | 3        |
+| 413 | 24MJMATH3P | Series and Sequences and Vector Calculus Lab                     | BSc - Bachelor of Science                 | 3        |
+| 410 | 24MJPHYS3L | Electricity and Magnetism                                        | BSc - Bachelor of Science                 | 3        |
+| 412 | 24MJPHYS3P | Electricity and Magnetism - Lab                                  | BSc - Bachelor of Science                 | 3        |
+| 414 | 24MJPHYS3S | Renewable energy and energy harvesting                           | BSc - Bachelor of Science                 | 3        |
+| 405 | 24MJZOOL3L | Biochemistry, Physiology and Comparative anatomy                 | BSc - Bachelor of Science                 | 3        |
+| 408 | 24MJZOOL3P | Biochemistry, Physiology and Comparative anatomy Lab             | BSc - Bachelor of Science                 | 3        |
+| 461 | 24BSLGEN5L | Basic English                                                    | BSc - Bachelor of Science                 | 5        |
+| 463 | 24BSLGHN5L | Hindi                                                            | BSc - Bachelor of Science                 | 5        |
+| 464 | 24BSLGKA5L | ವಿಜ್ಞಾನ ಸೌರಭ - 3 (Kannada)                                       | BSc - Bachelor of Science                 | 5        |
+| 462 | 24CVCOMM5L | Constitutional Values                                            | BSc - Bachelor of Science                 | 5        |
+| 466 | 24MJBOTN5L | Plant Physiology and Ecology                                     | BSc - Bachelor of Science                 | 5        |
+| 469 | 24MJBOTN5P | Plant Physiology and Ecology Lab                                 | BSc - Bachelor of Science                 | 5        |
+| 471 | 24MJBOTN5S | Biotechnology SEC                                                | BSc - Bachelor of Science                 | 5        |
+| 465 | 24MJCHEM5L | Chemistry-V                                                      | BSc - Bachelor of Science                 | 5        |
+| 468 | 24MJCHEM5P | Chemistry Lab-V                                                  | BSc - Bachelor of Science                 | 5        |
+| 477 | 24MJCOMP5L | Database Management Systems                                      | BSc - Bachelor of Science                 | 5        |
+| 478 | 24MJCOMP5P | DBMS Lab                                                         | BSc - Bachelor of Science                 | 5        |
+| 473 | 24MJMATH5L | Linear Algebra and Differential Equations                        | BSc - Bachelor of Science                 | 5        |
+| 475 | 24MJMATH5P | Linear Algebra and DE Lab                                        | BSc - Bachelor of Science                 | 5        |
+| 472 | 24MJPHYS5L | Quantum Mechanics                                                | BSc - Bachelor of Science                 | 5        |
+| 474 | 24MJPHYS5P | Quantum Mechanics Lab                                            | BSc - Bachelor of Science                 | 5        |
+| 476 | 24MJPHYS5S | Renewable Energy SEC                                             | BSc - Bachelor of Science                 | 5        |
+| 467 | 24MJZOOL5L | Animal Physiology and Genetics                                   | BSc - Bachelor of Science                 | 5        |
+| 470 | 24MJZOOL5P | Animal Physiology and Genetics Lab                               | BSc - Bachelor of Science                 | 5        |
++-----+------------+------------------------------------------------------------------+-------------------------------------------+----------+

@@ -1,0 +1,526 @@
+<!-- templates/attendance/principal_staff_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teaching Staff - Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <style>
+        /* ── base ── */
+        body {
+            background: #eef1f5;
+            padding: 20px;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        /* ── navbar ── */
+        .navbar {
+            background: linear-gradient(145deg, #0d1b4a, #1a2a6c);
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 12px 20px;
+        }
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+            font-weight: 500;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        .nav-link:hover {
+            color: #c7d2fe !important;
+            transform: translateY(-1px);
+        }
+
+        /* ── cards ── */
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .card:hover {
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18), 0 6px 14px rgba(0, 0, 0, 0.06);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #1a2a6c, #2d3e8f);
+            color: white;
+            border-radius: 16px 16px 0 0 !important;
+            padding: 18px 24px;
+            border-bottom: none;
+            box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.1);
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        .card-header h5 {
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .card-body {
+            padding: 24px 24px 30px;
+            background: #fff;
+        }
+
+        /* ── form elements ── */
+        .form-label {
+            font-weight: 600;
+            color: #1a2a6c;
+            font-size: 0.9rem;
+            letter-spacing: 0.3px;
+        }
+        .form-control,
+        .form-select {
+            border-radius: 10px;
+            border: 1px solid #dce1e8;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            transition: all 0.2s;
+            padding: 10px 14px;
+            background: #fafbfc;
+        }
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #2d3e8f;
+            box-shadow: 0 0 0 3px rgba(26, 42, 108, 0.15), inset 0 2px 4px rgba(0, 0, 0, 0.02);
+            background: #fff;
+        }
+
+        /* ── filter actions ── */
+        .filter-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-actions .btn {
+            min-width: 100px;
+            padding: 10px 20px;
+            font-weight: 600;
+            border: none;
+            border-radius: 10px;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.05);
+            transform: translateY(0);
+        }
+        .filter-actions .btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .btn-clear {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            color: #1a2a6c;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+        .btn-clear:hover {
+            background: #ffffff;
+            border-color: #1a2a6c;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+            color: #1a2a6c;
+        }
+        .btn-clear:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+        }
+        .btn-3d {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.15s;
+        }
+        .btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* ── table ── */
+        .table {
+            margin-top: 8px;
+            border-collapse: separate;
+            border-spacing: 0 4px;
+        }
+        .table thead th {
+            background: #f1f4f9;
+            border: none;
+            padding: 14px 12px;
+            font-weight: 600;
+            color: #1a2a6c;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #dce1e8;
+        }
+        /* ── centered columns ── */
+        .table thead th.text-center,
+        .table tbody td.text-center {
+            text-align: center !important;
+            vertical-align: middle;
+        }
+
+        .table tbody tr {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        .table tbody tr:hover {
+            background: #f8faff;
+            transform: scale(1.01) translateY(-2px);
+            box-shadow: 0 6px 18px rgba(26, 42, 108, 0.12);
+        }
+        .table tbody td {
+            border: none;
+            padding: 14px 12px;
+            vertical-align: middle;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ── badge (course) ── */
+        .badge-course {
+            background: linear-gradient(145deg, #1a2a6c, #2d3e8f);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            letter-spacing: 0.2px;
+        }
+
+        /* ── animated attendance badges ── */
+        .attendance-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            position: relative;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            min-width: 60px;
+        }
+
+        /* pulse ring animation */
+        .attendance-badge::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 30px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .attendance-badge:hover::after {
+            opacity: 1;
+            animation: pulse-ring 1.2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-ring {
+            0% {
+                box-shadow: 0 0 0 0 rgba(26, 42, 108, 0.3);
+            }
+            70% {
+                box-shadow: 0 0 0 8px rgba(26, 42, 108, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(26, 42, 108, 0);
+            }
+        }
+
+        /* shimmer / glow animation for high scores */
+        .attendance-badge.high {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(40, 167, 69, 0.3);
+        }
+        .attendance-badge.high:hover {
+            box-shadow: 0 4px 24px rgba(40, 167, 69, 0.5);
+            transform: scale(1.05);
+        }
+        .attendance-badge.high::after {
+            box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+        }
+
+        .attendance-badge.medium {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: #212529;
+            box-shadow: 0 2px 12px rgba(255, 193, 7, 0.3);
+        }
+        .attendance-badge.medium:hover {
+            box-shadow: 0 4px 24px rgba(255, 193, 7, 0.5);
+            transform: scale(1.05);
+        }
+        .attendance-badge.medium::after {
+            box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
+        }
+
+        .attendance-badge.low {
+            background: linear-gradient(135deg, #dc3545, #e74c6f);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(220, 53, 69, 0.3);
+            animation: low-pulse 1.8s ease-in-out infinite;
+        }
+        .attendance-badge.low:hover {
+            box-shadow: 0 4px 24px rgba(220, 53, 69, 0.5);
+            transform: scale(1.05);
+        }
+        .attendance-badge.low::after {
+            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4);
+        }
+
+        @keyframes low-pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+                box-shadow: 0 2px 16px rgba(220, 53, 69, 0.4);
+            }
+        }
+
+        /* ── present / total counter with animation ── */
+        .counter-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f1f4f9;
+            padding: 4px 14px 4px 10px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1a2a6c;
+            transition: all 0.2s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+        }
+        .counter-box:hover {
+            background: #e8edf5;
+            transform: scale(1.04);
+        }
+        .counter-box .num-present {
+            color: #28a745;
+            font-weight: 700;
+        }
+        .counter-box .num-total {
+            color: #6c7a92;
+            font-weight: 600;
+        }
+        .counter-box .separator {
+            color: #b0baca;
+            font-weight: 300;
+        }
+
+        /* ── empty state ── */
+        .empty-muted {
+            color: #8892a8;
+            font-weight: 500;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 768px) {
+            .filter-actions .btn {
+                min-width: 80px;
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+        }
+        @media (max-width: 576px) {
+            .filter-actions .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .filter-actions {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ─── NAVBAR ─── -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'principal_dashboard' %}">
+                <i class="fas fa-university"></i> Attendance System
+            </a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ─── MAIN ─── -->
+    <div class="container">
+        <h2 class="mb-4" style="color: #1a2a6c; font-weight: 700; letter-spacing: -0.5px;">
+            <i class="fas fa-users" style="color: #2d3e8f;"></i> {{ type }} Staff
+        </h2>
+
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-address-card me-2"></i>Total: {{ staff_data|length }}</h5>
+            </div>
+            <div class="card-body">
+
+                <!-- ── export buttons ── -->
+                <div class="d-flex gap-2 mb-3 flex-wrap">
+                    <a href="?{{ request.GET.urlencode }}&export=excel" class="btn btn-success btn-3d">
+                        <i class="fas fa-file-excel"></i> Export Excel
+                    </a>
+                    <a href="?{{ request.GET.urlencode }}&export=pdf" class="btn btn-danger btn-3d">
+                        <i class="fas fa-file-pdf"></i> Export PDF
+                    </a>
+                </div>
+
+                <!-- ── filter form ── -->
+                <form method="GET" action="" id="filterForm" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label for="search" class="form-label"><i class="fas fa-search me-1"></i>Search</label>
+                        <input type="text" class="form-control" id="search" name="search"
+                        placeholder="Name, username, email..." value="{{ search }}" />
+                    </div>
+                    <div class="col-md-3">
+                        <label for="course" class="form-label"><i class="fas fa-book me-1"></i>Assigned Course</label>
+                        <select class="form-select" id="course" name="course">
+                            <option value="">All Courses</option>
+                            {% for course in courses %}
+                            <option value="{{ course.code }}" {% if selected_course == course.code %}selected{% endif %}>
+                                {{ course.code }} - {{ course.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="from_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>From</label>
+                        <input type="date" class="form-control" id="from_date" name="from_date" value="{{ from_date }}" />
+                    </div>
+                    <div class="col-md-2">
+                        <label for="to_date" class="form-label"><i class="fas fa-calendar-alt me-1"></i>To</label>
+                        <input type="date" class="form-control" id="to_date" name="to_date" value="{{ to_date }}" />
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <div class="filter-actions">
+                            <button type="button" class="btn btn-clear" id="clearBtn">
+                                <i class="fas fa-undo-alt me-1"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- ─── TABLE ─── -->
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <!-- centered columns -->
+                                <th class="text-center">Assigned Course</th>
+                                <th class="text-center">Attendance %</th>
+                                <th class="text-center">Present / Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in staff_data %}
+                            <tr onclick="window.location='{% url 'principal_staff_detail' entry.user.id %}'">
+                                <td><strong>{{ entry.user.get_full_name }}</strong></td>
+                                <td>{{ entry.user.username }}</td>
+                                <td>{{ entry.user.get_user_type_display }}</td>
+
+                                <!-- Assigned Course (centered) -->
+                                <td class="text-center">
+                                    {% if entry.user.assigned_course.code %}
+                                    <span class="badge-course">
+                                        <i class="fas fa-book-open me-1"></i>
+                                        {{ entry.user.assigned_course.code }}
+                                    </span>
+                                    {% else %}
+                                    <span class="text-muted" style="font-size:0.85rem;">—</span>
+                                    {% endif %}
+                                </td>
+
+                                <!-- Attendance % (centered + animated badge) -->
+                                <td class="text-center">
+                                    {{ entry.percentage }}%
+                                </td>
+
+                                <!-- Present / Total (centered + counter box) -->
+                                <td class="text-center">
+                                    <span class="counter-box">
+                                        <i class="fas fa-user-check" style="color:#28a745;"></i>
+                                        <span class="num-present">{{ entry.present_count }}</span>
+                                        <span class="separator">/</span>
+                                        <span class="num-total">{{ entry.total_working_days }}</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    No staff found matching criteria.
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ─── SCRIPTS ─── -->
+    <script>
+        (function() {
+            const form = document.getElementById('filterForm');
+            const searchInput = document.getElementById('search');
+            const courseSelect = document.getElementById('course');
+            const fromDate = document.getElementById('from_date');
+            const toDate = document.getElementById('to_date');
+            const clearBtn = document.getElementById('clearBtn');
+
+            let debounceTimer = null;
+
+            function submitForm() {
+                form.submit();
+            }
+
+            courseSelect.addEventListener('change', submitForm);
+            fromDate.addEventListener('change', submitForm);
+            toDate.addEventListener('change', submitForm);
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(submitForm, 300);
+            });
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(debounceTimer);
+                    submitForm();
+                }
+            });
+
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                courseSelect.value = '';
+                fromDate.value = '';
+                toDate.value = '';
+                form.submit();
+            });
+        })();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js">
+    </script>
+</body>
+</html>

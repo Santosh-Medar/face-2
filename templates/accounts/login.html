@@ -1,0 +1,231 @@
+<!-- templates/accounts/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Attendance System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+        }
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .card-header .logo-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .card-header h3 {
+            margin: 0;
+            font-weight: 600;
+        }
+        .card-header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .form-label {
+            font-weight: 500;
+            color: #555;
+            margin-bottom: 5px;
+        }
+        .form-control {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .input-group-text {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+            color: #667eea;
+        }
+        .input-group .form-control {
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 14px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            transition: all 0.3s;
+            letter-spacing: 1px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+        .btn-login:active {
+            transform: translateY(0);
+        }
+        .register-link {
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .register-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+        }
+        .user-types-info {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            font-size: 0.8rem;
+            color: #888;
+        }
+        .user-types-info span {
+            text-align: center;
+        }
+        .user-types-info i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="card login-card">
+            <div class="card-header">
+                <div class="logo-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Attendance System</h3>
+                <p>Login to access your dashboard</p>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            <i class="fas fa-info-circle"></i> {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <form method="POST" id="loginForm">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="username" class="form-label">
+                            <i class="fas fa-user"></i> Username
+                        </label>
+                        <input type="text" class="form-control" id="username" name="username" 
+                               placeholder="Enter your username" required autofocus>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label">
+                            <i class="fas fa-lock"></i> Password
+                        </label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password" 
+                                   placeholder="Enter your password" required>
+                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" 
+                                    style="border: 2px solid #e0e0e0; border-left: none; border-radius: 0 10px 10px 0;">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-login w-100 mb-3 text-white">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    
+    
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center mt-3" style="color: rgba(255,255,255,0.7); font-size: 0.85rem;">
+            &copy; Attendance Management System.
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+        
+        // Auto-dismiss alerts after 5 seconds
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                const bsAlert = new bootstrap.Alert(alert);
+                bsAlert.close();
+            });
+        }, 5000);
+    </script>
+</body>
+</html>

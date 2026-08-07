@@ -1,0 +1,221 @@
+<!-- templates/admin/admin_teaching_staff_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Staff</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #eef1f5; padding: 20px; }
+        .navbar { background: linear-gradient(145deg, #0d1b4a, #1a2a6c); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .card { border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .card-header { background: linear-gradient(135deg, #1a2a6c, #2d3e8f); color: #fff; border-radius: 16px 16px 0 0 !important; }
+        .table tbody tr { cursor: pointer; transition: all 0.15s; }
+        .table tbody tr:hover { background: #f0f2fa; transform: scale(1.01); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .btn-3d { box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.15s; }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .btn-clear { background: #f8fafc; border: 1px solid #cbd5e1; color: #1a2a6c; }
+        .btn-clear:hover { background: #fff; border-color: #1a2a6c; }
+        .table-container { position: relative; min-height: 200px; }
+        #tableLoading { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'admin_dashboard' %}"><i class="fas fa-university"></i> Admin Panel</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">Teaching Staff</h2>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Total: <span id="totalCount">{{ staff.count }}</span></h5>
+            </div>
+            <div class="card-body">
+                <form method="GET" id="filterForm" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label>Search</label>
+                        <input type="text" name="search" class="form-control" placeholder="Name, Username, Email..." value="{{ search }}" id="searchInput">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Course</label>
+                        <select name="course" class="form-select" id="courseSelect">
+                            <option value="">All Courses</option>
+                            {% for c in courses %}
+                            <option value="{{ c.id }}" {% if c.id|stringformat:"s" == selected_course %}selected{% endif %}>
+                                {{ c.code }} - {{ c.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Designation</label>
+                        <select name="designation" class="form-select" id="designationSelect">
+                            <option value="">All</option>
+                            {% for d in designations %}
+                            <option value="{{ d }}" {% if d == selected_designation %}selected{% endif %}>{{ d }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <a href="." class="btn btn-clear btn-3d w-100" id="clearBtn">
+                            <i class="fas fa-undo-alt"></i> Clear
+                        </a>
+                    </div>
+                </form>
+
+                <div class="table-container">
+                    <div id="tableLoading"><i class="fas fa-spinner fa-spin fa-2x text-secondary"></i></div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Course</th>
+                                    <th>Designation</th>
+                                </tr>
+                            </thead>
+                            <tbody id="staffTableBody">
+                                {% for u in staff %}
+                                <tr onclick="window.location='{% url 'admin_user_detail' u.id %}'">
+                                    <td>{{ u.get_full_name }}</td>
+                                    <td>{{ u.username }}</td>
+                                    <td>{{ u.email }}</td>
+                                    <td>{{ u.phone_number|default:"—" }}</td>
+                                    <td>{{ u.assigned_course.code|default:"—" }}</td>
+                                    <td>{{ u.staff_profile.designation|default:"—" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="6" class="text-center py-4 text-muted">No staff found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const form = document.getElementById('filterForm');
+            const searchInput = document.getElementById('searchInput');
+            const courseSelect = document.getElementById('courseSelect');
+            const designationSelect = document.getElementById('designationSelect');
+            const tableBody = document.getElementById('staffTableBody');
+            const totalCount = document.getElementById('totalCount');
+            const tableLoading = document.getElementById('tableLoading');
+            const clearBtn = document.getElementById('clearBtn');
+
+            let debounceTimer = null;
+            let fetchController = null;
+
+            function getFilterParams() {
+                const params = new URLSearchParams();
+                const search = searchInput.value.trim();
+                if (search) params.set('search', search);
+                const course = courseSelect.value;
+                if (course) params.set('course', course);
+                const designation = designationSelect.value;
+                if (designation) params.set('designation', designation);
+                return params;
+            }
+
+            function applyFilters() {
+                if (fetchController) {
+                    fetchController.abort();
+                }
+                fetchController = new AbortController();
+
+                const params = getFilterParams();
+                const url = window.location.pathname + '?' + params.toString();
+
+                tableLoading.style.display = 'block';
+
+                fetch(url, {
+                    signal: fetchController.signal,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    tableLoading.style.display = 'none';
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    const newBody = doc.querySelector('#staffTableBody');
+                    if (newBody) {
+                        tableBody.innerHTML = newBody.innerHTML;
+                    }
+
+                    const newCount = doc.querySelector('#totalCount');
+                    if (newCount) {
+                        totalCount.textContent = newCount.textContent;
+                    }
+
+                    // Update URL without reload
+                    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                    window.history.pushState({}, '', newUrl);
+                })
+                .catch(error => {
+                    if (error.name === 'AbortError') return;
+                    tableLoading.style.display = 'none';
+                    console.error('Fetch error:', error);
+                })
+                .finally(() => {
+                    fetchController = null;
+                });
+            }
+
+            // ---- Event listeners ----
+            courseSelect.addEventListener('change', applyFilters);
+            designationSelect.addEventListener('change', applyFilters);
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(applyFilters, 300);
+            });
+
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(debounceTimer);
+                    applyFilters();
+                }
+            });
+
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                searchInput.value = '';
+                courseSelect.value = '';
+                designationSelect.value = '';
+                applyFilters();
+                searchInput.focus();
+            });
+
+            // Prevent default form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+            });
+
+            // Initial load: apply filters (in case URL has params)
+            applyFilters();
+
+            // Popstate: reload on back/forward for simplicity
+            window.addEventListener('popstate', function() {
+                window.location.reload();
+            });
+        })();
+    </script>
+</body>
+</html>

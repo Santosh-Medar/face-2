@@ -1,0 +1,121 @@
+<!-- templates/attendance/principal_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principal Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #f0f2f5; padding: 20px; }
+        .navbar { background: linear-gradient(135deg, #1a237e 0%, #283593 100%); margin-bottom: 30px; border-radius: 10px; }
+        .navbar-brand { color: white !important; font-weight: bold; }
+        .nav-link { color: rgba(255,255,255,0.9) !important; }
+        .dashboard-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+        .dashboard-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        .card-count {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .staff-card .card-icon { color: #1a237e; }
+        .non-teaching-card .card-icon { color: #0277bd; }
+        .student-card .card-icon { color: #2e7d32; }
+        .staff-card .card-count { color: #1a237e; }
+        .non-teaching-card .card-count { color: #0277bd; }
+        .student-card .card-count { color: #2e7d32; }
+        .welcome-banner {
+            background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'principal_dashboard' %}">
+                <i class="fas fa-university"></i> College Attendance System
+            </a>
+            <div class="d-flex">
+                <a href="{% url 'profile' %}" class="nav-link"><i class="fas fa-user"></i> Profile</a>
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="welcome-banner">
+            <h2>Welcome {{ user.get_full_name }}</h2>
+            <p class="mb-0">Institution Overview Dashboard</p>
+        </div>
+
+        <div class="row">
+            <!-- Teaching Staff Card -->
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'principal_teaching_staff' %}" style="text-decoration: none; cursor: pointer;">
+                    <div class="dashboard-card staff-card">
+                        <div class="card-icon">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="card-count">{{ teaching_staff_count }}</div>
+                        <div class="card-title">Teaching Staff</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Non-Teaching Staff Card -->
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'principal_non_teaching_staff' %}" style="text-decoration: none; cursor: pointer;">
+                    <div class="dashboard-card non-teaching-card">
+                        <div class="card-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="card-count">{{ non_teaching_staff_count }}</div>
+                        <div class="card-title">Non-Teaching Staff</div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Students Card -->
+            <div class="col-md-4 mb-4">
+                <a href="{% url 'principal_course_types' 'students' %}" style="text-decoration: none;">
+                    <div class="dashboard-card student-card">
+                        <div class="card-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="card-count">{{ students_count }}</div>
+                        <div class="card-title">Students</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

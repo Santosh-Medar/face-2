@@ -1,0 +1,326 @@
+<!-- templates/admin/admin_student_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Students</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body { background: #eef1f5; padding: 20px; }
+        .navbar { background: linear-gradient(145deg, #0d1b4a, #1a2a6c); border-radius: 12px; box-shadow: 0 8px 25px rgba(0,0,0,0.3); margin-bottom: 30px; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .card { border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .card-header { background: linear-gradient(135deg, #1a2a6c, #2d3e8f); color: #fff; border-radius: 16px 16px 0 0 !important; }
+        .table tbody tr { cursor: pointer; transition: all 0.15s; }
+        .table tbody tr:hover { background: #f0f2fa; transform: scale(1.01); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .badge { background: #1a2a6c; }
+        .btn-3d { box-shadow: 0 4px 8px rgba(0,0,0,0.1); transition: all 0.15s; }
+        .btn-3d:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+        .btn-clear { background: #f8fafc; border: 1px solid #cbd5e1; color: #1a2a6c; }
+        .btn-clear:hover { background: #fff; border-color: #1a2a6c; }
+        .section-loading { font-size: 0.85rem; color: #6c757d; margin-left: 8px; }
+        .table-container { position: relative; min-height: 200px; }
+        #tableLoading { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'admin_dashboard' %}"><i class="fas fa-university"></i> Admin Panel</a>
+            <div class="d-flex">
+                <a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2 class="mb-4">Students</h2>
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Total Enrollments: <span id="totalCount">{{ enrollments.count }}</span></h5>
+            </div>
+            <div class="card-body">
+                <form method="GET" id="filterForm" class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <label>Search</label>
+                        <input type="text" name="search" class="form-control" placeholder="Name, Roll No..." value="{{ search }}" id="searchInput">
+                    </div>
+                    <div class="col-md-2">
+                        <label>Course</label>
+                        <select name="course" class="form-select" id="courseSelect">
+                            <option value="">All</option>
+                            {% for c in courses %}
+                            <option value="{{ c.id }}" {% if c.id|stringformat:"s" == selected_course %}selected{% endif %}>{{ c.code }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Sem</label>
+                        <select name="year" class="form-select" id="yearSelect">
+                            <option value="">All</option>
+                            <option value="1" {% if selected_year == "1" %}selected{% endif %}>1</option>
+                            <option value="2" {% if selected_year == "2" %}selected{% endif %}>2</option>
+                            <option value="3" {% if selected_year == "3" %}selected{% endif %}>3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Section</label>
+                        <select name="section" class="form-select" id="sectionSelect">
+                            <option value="">All</option>
+                        </select>
+                        <small id="sectionLoading" class="section-loading d-none"><i class="fas fa-spinner fa-spin"></i> Loading...</small>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <a href="." class="btn btn-clear btn-3d w-100" id="clearBtn">
+                            <i class="fas fa-undo-alt"></i> Clear
+                        </a>
+                    </div>
+                </form>
+
+                <div class="table-container">
+                    <div id="tableLoading"><i class="fas fa-spinner fa-spin fa-2x text-secondary"></i></div>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Roll No</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Year</th>
+                                    <th>Section</th>
+                                </tr>
+                            </thead>
+                            <tbody id="studentTableBody">
+                                {% for enrollment in enrollments %}
+                                <tr onclick="window.location='{% url 'admin_user_detail' enrollment.student.user.id %}'">
+                                    <td>{{ enrollment.student.roll_no }}</td>
+                                    <td>{{ enrollment.student.user.get_full_name }}</td>
+                                    <td>{{ enrollment.course.code }}</td>
+                                    <td>{{ enrollment.semester }}</td>
+                                    <td>{{ enrollment.section.name }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center py-4 text-muted">No students found.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const form = document.getElementById('filterForm');
+            const searchInput = document.getElementById('searchInput');
+            const courseSelect = document.getElementById('courseSelect');
+            const yearSelect = document.getElementById('yearSelect');
+            const sectionSelect = document.getElementById('sectionSelect');
+            const sectionLoading = document.getElementById('sectionLoading');
+            const tableBody = document.getElementById('studentTableBody');
+            const totalCount = document.getElementById('totalCount');
+            const tableLoading = document.getElementById('tableLoading');
+            const clearBtn = document.getElementById('clearBtn');
+
+            let debounceTimer = null;
+            let fetchController = null; // to abort previous requests
+
+            // Store the initial selected section from the server (if any)
+            const initialSection = "{{ selected_section|default:'' }}";
+
+            // ---- Helper: get current filter values ----
+            function getFilterParams() {
+                const params = new URLSearchParams();
+                const search = searchInput.value.trim();
+                if (search) params.set('search', search);
+                const course = courseSelect.value;
+                if (course) params.set('course', course);
+                const year = yearSelect.value;
+                if (year) params.set('year', year);
+                const section = sectionSelect.value;
+                if (section) params.set('section', section);
+                return params;
+            }
+
+            // ---- Apply filters via AJAX ----
+            function applyFilters() {
+                // Abort any ongoing fetch
+                if (fetchController) {
+                    fetchController.abort();
+                }
+                fetchController = new AbortController();
+
+                const params = getFilterParams();
+                const url = window.location.pathname + '?' + params.toString();
+
+                // Show loading indicator
+                tableLoading.style.display = 'block';
+
+                fetch(url, {
+                    signal: fetchController.signal,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(response => response.text())
+                .then(html => {
+                    tableLoading.style.display = 'none';
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+
+                    // Update table body
+                    const newBody = doc.querySelector('#studentTableBody');
+                    if (newBody) {
+                        tableBody.innerHTML = newBody.innerHTML;
+                    }
+
+                    // Update total count
+                    const newCount = doc.querySelector('#totalCount');
+                    if (newCount) {
+                        totalCount.textContent = newCount.textContent;
+                    }
+
+                    // Update URL in address bar (without reload) to reflect filters
+                    const newUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+                    window.history.pushState({}, '', newUrl);
+                })
+                .catch(error => {
+                    if (error.name === 'AbortError') {
+                        // Request was aborted, ignore
+                        return;
+                    }
+                    tableLoading.style.display = 'none';
+                    console.error('Error fetching filtered data:', error);
+                })
+                .finally(() => {
+                    fetchController = null;
+                });
+            }
+
+            // ---- Fetch sections for course & semester ----
+            function fetchSections(courseId, semester) {
+                if (!courseId || !semester) {
+                    sectionSelect.innerHTML = '<option value="">All</option>';
+                    // After clearing sections, re-apply filters (to remove section filter)
+                    applyFilters();
+                    return;
+                }
+
+                sectionLoading.classList.remove('d-none');
+                const url = `/api/sections/${courseId}/${semester}/`;
+                fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                .then(response => response.json())
+                .then(data => {
+                    sectionLoading.classList.add('d-none');
+                    let options = '<option value="">All</option>';
+                    const currentSection = sectionSelect.value;
+                    let found = false;
+                    data.forEach(section => {
+                        const selected = (section.name == currentSection) ? 'selected' : '';
+                        options += `<option value="${section.name}" ${selected}>${section.name}</option>`;
+                        if (section.name == currentSection) found = true;
+                    });
+                    // If current selection not in new list, default to "All"
+                    if (!found && currentSection !== '') {
+                        // Reset section to All
+                        options = '<option value="">All</option>';
+                        data.forEach(section => {
+                            options += `<option value="${section.name}">${section.name}</option>`;
+                        });
+                        // Force section value to "" in the DOM
+                        sectionSelect.value = '';
+                    }
+                    sectionSelect.innerHTML = options;
+                    // Re-apply filters after sections are updated
+                    applyFilters();
+                })
+                .catch(error => {
+                    sectionLoading.classList.add('d-none');
+                    console.error('Error fetching sections:', error);
+                    sectionSelect.innerHTML = '<option value="">All</option><option value="" disabled>Error loading</option>';
+                    applyFilters();
+                });
+            }
+
+            // ---- Event listeners ----
+            // Course or year change: fetch sections first, then apply filters
+            courseSelect.addEventListener('change', function() {
+                const courseId = courseSelect.value;
+                const semester = yearSelect.value;
+                if (courseId && semester) {
+                    fetchSections(courseId, semester);
+                } else {
+                    // If either is missing, clear sections and apply filters
+                    sectionSelect.innerHTML = '<option value="">All</option>';
+                    applyFilters();
+                }
+            });
+
+            yearSelect.addEventListener('change', function() {
+                const courseId = courseSelect.value;
+                const semester = yearSelect.value;
+                if (courseId && semester) {
+                    fetchSections(courseId, semester);
+                } else {
+                    sectionSelect.innerHTML = '<option value="">All</option>';
+                    applyFilters();
+                }
+            });
+
+            // Section change: apply filters immediately
+            sectionSelect.addEventListener('change', applyFilters);
+
+            // Search input: debounced applyFilters
+            searchInput.addEventListener('input', function() {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(applyFilters, 300);
+            });
+
+            // Enter key on search triggers immediate apply
+            searchInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    clearTimeout(debounceTimer);
+                    applyFilters();
+                }
+            });
+
+            // Clear button: reset all filters and reload
+            clearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Reset form fields
+                searchInput.value = '';
+                courseSelect.value = '';
+                yearSelect.value = '';
+                sectionSelect.innerHTML = '<option value="">All</option>';
+                // Apply filters (will show all)
+                applyFilters();
+                // Focus back to search
+                searchInput.focus();
+            });
+
+            // ---- Initial load: fetch sections if course & semester are pre-selected ----
+            const initialCourse = courseSelect.value;
+            const initialSemester = yearSelect.value;
+            if (initialCourse && initialSemester) {
+                fetchSections(initialCourse, initialSemester);
+            } else {
+                // If no course/sem, just apply filters (which will show all)
+                applyFilters();
+            }
+
+            // ---- Popstate: when user uses back/forward, update filters from URL ----
+            window.addEventListener('popstate', function() {
+                // Reload the page to reflect URL changes (simplest)
+                window.location.reload();
+            });
+
+            // Prevent default form submission (should not happen with AJAX)
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+            });
+        })();
+    </script>
+</body>
+</html>
